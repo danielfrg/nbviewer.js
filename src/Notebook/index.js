@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import { Cells } from "@nteract/presentational-components";
 
