@@ -68,11 +68,15 @@ class Notebook extends React.Component {
 
             const widgetState =
                 notebook.metadata.widgets[WIDGET_STATE_MIMETYPE];
-            await widgetManager.set_state(widgetState);
+            if (widgetState) {
+                await widgetManager.set_state(widgetState);
+            }
 
             const widgetOnChangeState =
                 notebook.metadata.widgets[WIDGET_ONCHANGE_MIMETYPE];
-            await widgetManager.setOnChangeState(widgetOnChangeState);
+            if (widgetOnChangeState) {
+                await widgetManager.setOnChangeState(widgetOnChangeState);
+            }
 
             this.setState({
                 widgetManager: widgetManager,
