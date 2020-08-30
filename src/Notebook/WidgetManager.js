@@ -2,9 +2,10 @@ import { HTMLManager } from "@jupyter-widgets/html-manager";
 import { resolvePromisesDict } from "@jupyter-widgets/base";
 import Papa from "papaparse";
 
-const WIDGET_STATE_MIMETYPE = "application/vnd.jupyter.widget-state+json";
-const WIDGET_VIEW_MIMETYPE = "application/vnd.jupyter.widget-view+json";
-const WIDGET_ONCHANGE_MIMETYPE =
+export const WIDGET_STATE_MIMETYPE =
+    "application/vnd.jupyter.widget-state+json";
+export const WIDGET_VIEW_MIMETYPE = "application/vnd.jupyter.widget-view+json";
+export const WIDGET_ONCHANGE_MIMETYPE =
     "application/vnd.illusionist.widget-onchange+json";
 
 const NUMERIC_WIDGETS = [
@@ -84,18 +85,6 @@ export default class IllusionistWidgetManager extends HTMLManager {
             const onChangeState = JSON.parse(tag.innerHTML);
             await this.setOnChangeState(onChangeState);
         }
-        this.widgetAffects = {};
-
-        this.onChangeState.control_widgets.forEach((controlId) => {
-            this.widgetAffects[controlId] = [];
-            for (let [outputId, obj] of Object.entries(
-                this.onChangeState.onchange
-            )) {
-                if (obj.affected_by.includes(controlId)) {
-                    this.widgetAffects[controlId].push(outputId);
-                }
-            }
-        });
     }
 
     /**

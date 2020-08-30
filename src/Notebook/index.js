@@ -4,8 +4,11 @@ import { withRouter } from "react-router-dom";
 import { Cells } from "@nteract/presentational-components";
 
 import NBCell from "./NBCell";
-import IllusionistWidgetManager from "./WidgetManager";
 import { Provider } from "./Context";
+import IllusionistWidgetManager, {
+    WIDGET_STATE_MIMETYPE,
+    WIDGET_ONCHANGE_MIMETYPE,
+} from "./WidgetManager";
 
 class Notebook extends React.Component {
     constructor(props) {
@@ -60,34 +63,20 @@ class Notebook extends React.Component {
             );
         }
 
-        this.createWidgetStateElements(notebook);
         const widgetManager = new IllusionistWidgetManager();
-        await widgetManager.loadState();
+
+        const widgetState = notebook.metadata.widgets[WIDGET_STATE_MIMETYPE];
+        await widgetManager.set_state(widgetState);
+
+        const widgetOnChangeState =
+            notebook.metadata.widgets[WIDGET_ONCHANGE_MIMETYPE];
+        await widgetManager.setOnChangeState(widgetOnChangeState);
 
         this.setState({
             notebook: notebook,
             widgetManager: widgetManager,
             loading: false,
         });
-    }
-
-    createWidgetStateElements(notebook) {
-        /**
-         * We create some elements in the DOM that the WidgetManager needs to
-         * function corrrectly.
-         *
-         * TODO: Should we just set this directly on the WidgetManager? Probably
-         */
-        if (notebook.metadata && notebook.metadata.widgets) {
-            for (const [key, value] of Object.entries(
-                notebook.metadata.widgets
-            )) {
-                let scriptEl = document.createElement("script");
-                scriptEl.type = key;
-                scriptEl.innerHTML = JSON.stringify(value);
-                document.body.appendChild(scriptEl);
-            }
-        }
     }
 
     render() {
