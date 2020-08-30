@@ -63,18 +63,24 @@ class Notebook extends React.Component {
             );
         }
 
-        const widgetManager = new IllusionistWidgetManager();
+        if (notebook.metadata.widgets) {
+            const widgetManager = new IllusionistWidgetManager();
 
-        const widgetState = notebook.metadata.widgets[WIDGET_STATE_MIMETYPE];
-        await widgetManager.set_state(widgetState);
+            const widgetState =
+                notebook.metadata.widgets[WIDGET_STATE_MIMETYPE];
+            await widgetManager.set_state(widgetState);
 
-        const widgetOnChangeState =
-            notebook.metadata.widgets[WIDGET_ONCHANGE_MIMETYPE];
-        await widgetManager.setOnChangeState(widgetOnChangeState);
+            const widgetOnChangeState =
+                notebook.metadata.widgets[WIDGET_ONCHANGE_MIMETYPE];
+            await widgetManager.setOnChangeState(widgetOnChangeState);
+
+            this.setState({
+                widgetManager: widgetManager,
+            });
+        }
 
         this.setState({
             notebook: notebook,
-            widgetManager: widgetManager,
             loading: false,
         });
     }
