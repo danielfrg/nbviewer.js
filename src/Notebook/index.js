@@ -1,5 +1,5 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
+import React, { Fragment } from "react";
+import { withRouter, Link } from "react-router-dom";
 
 import { Cells } from "@nteract/presentational-components";
 
@@ -76,6 +76,8 @@ class Notebook extends React.Component {
     }
 
     render() {
+        const { url } = this.props.match.params;
+
         // Get the notebook from props or state
         let { notebook } = this.props;
         if (!notebook) {
@@ -104,11 +106,31 @@ class Notebook extends React.Component {
             );
         } else if (notebook) {
             contentEl = (
-                <Cells>
-                    {notebook.cells.map((cell, i) => {
-                        return <NBCell key={i} {...cell}></NBCell>;
-                    })}
-                </Cells>
+                <Fragment>
+                    <div className="action-buttons float-right">
+                        <Link to="/">
+                            <span className="material-icons">home</span>
+                        </Link>
+                        {url ? (
+                            <a
+                                href={`//${url}`}
+                                title="Download Notebook"
+                                download
+                            >
+                                <span className="material-icons">
+                                    cloud_download
+                                </span>
+                            </a>
+                        ) : (
+                            ""
+                        )}
+                    </div>
+                    <Cells className="cells">
+                        {notebook.cells.map((cell, i) => {
+                            return <NBCell key={i} {...cell}></NBCell>;
+                        })}
+                    </Cells>
+                </Fragment>
             );
         }
 
@@ -118,7 +140,10 @@ class Notebook extends React.Component {
                     widgetManager: this.state.widgetManager,
                 }}
             >
-                <main className="container notebook">{contentEl}</main>;
+                <main className="notebook container w-100 h-100 p-3 mx-auto">
+                    {contentEl}
+                </main>
+                ;
             </Provider>
         );
     }

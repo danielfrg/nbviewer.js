@@ -44,7 +44,8 @@ class Home extends React.Component {
                     of the Notebooks.
                 </p>
                 <p>
-                    It&apos;s built using React and{" "}
+                    It&apos;s built using{" "}
+                    <a href="https://reactjs.org/">React</a> and{" "}
                     <a href="https://github.com/nteract/nteract">
                         nteract components
                     </a>

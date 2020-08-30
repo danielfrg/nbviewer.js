@@ -121,6 +121,22 @@ footer {
         }
     }
 
+    .action-buttons {
+        padding: 30px 10px 0;
+
+        a,
+        button {
+            background: transparent;
+            border: none;
+            margin-right: 5px;
+            color: #ccc;
+
+            &:hover {
+                color: #636d72;
+            }
+        }
+    }
+
     .prompt {
         padding: 9px 12px;
     }
