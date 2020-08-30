@@ -27,8 +27,7 @@ class Notebook extends React.Component {
                     try {
                         const notebook = await response.json();
 
-                        this.createWidgetStateEl(notebook);
-
+                        this.createWidgetStateElements(notebook);
                         const widgetManager = new WidgetManager();
                         await widgetManager.loadState();
 
@@ -50,7 +49,13 @@ class Notebook extends React.Component {
         }
     }
 
-    createWidgetStateEl(notebook) {
+    createWidgetStateElements(notebook) {
+        /**
+         * We create some elements in the DOM that the WidgetManager needs to
+         * function corrrectly.
+         *
+         * TODO: Should we just set this directly on the WidgetManager? Probably
+         */
         for (const [key, value] of Object.entries(notebook.metadata.widgets)) {
             let scriptEl = document.createElement("script");
             scriptEl.type = key;
