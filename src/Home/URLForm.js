@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 function URLForm(props) {
-    // const [url, setURL] = useState("");
-    const [url, setURL] = useState(
-        "https://gist.githubusercontent.com/danielfrg/56973e28820d4f2411fbbd1ed8c88e17/raw/b8cf1ceccb2f56be84ebca69bb1cb8f0a15d8e79/data-types.ipynb"
-    );
     const [error, setError] = useState("");
+    const [url, setURL] = useState("");
+    // const [url, setURL] = useState(
+    //     "https://gist.githubusercontent.com/danielfrg/56973e28820d4f2411fbbd1ed8c88e17/raw/b8cf1ceccb2f56be84ebca69bb1cb8f0a15d8e79/data-types.ipynb"
+    // );
 
     const handleSubmit = (event) => {
         event.preventDefault();

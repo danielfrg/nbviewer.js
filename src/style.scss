@@ -1,7 +1,12 @@
 @import "@primer/css/markdown/index.scss";
 
+html {
+    height: 100%;
+}
+
 body {
-    // background-color: rgba(51, 72, 101, 0.06);
+    height: 100%;
+    display: flex;
     font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -13,9 +18,26 @@ body {
     color: #ff0000;
 }
 
-main.home {
-    width: 650px;
-    margin-top: 50px;
+.modal {
+    font-size: 0.9em;
+
+    .modal-dialog {
+        margin: 200px auto;
+
+        .modal-title {
+            font-size: 1.1em;
+        }
+    }
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+}
+
+.home {
+    max-width: 650px;
+    padding-top: 50px !important;
 
     h1 {
         font-size: 5.5em;
@@ -55,7 +77,41 @@ main.home {
     }
 }
 
+footer {
+    color: #636d72;
+    font-size: 0.8em;
+
+    p {
+        margin-bottom: 0;
+    }
+
+    a {
+        color: #636d72;
+        text-decoration: underline;
+
+        &:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+    }
+
+    button {
+        background: transparent;
+        border: none;
+        padding: 0;
+        color: #636d72;
+        text-decoration: underline;
+
+        &:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+    }
+}
+
 .notebook {
+    max-width: 960px;
+
     .loading {
         margin: 100px auto;
 
@@ -66,7 +122,7 @@ main.home {
     }
 
     .prompt {
-        padding: 9px;
+        padding: 9px 12px;
     }
 
     .markdown-body {

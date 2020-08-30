@@ -27,6 +27,13 @@ class Notebook extends React.Component {
                     try {
                         const notebook = await response.json();
 
+                        const { nbformat } = notebook;
+                        if (nbformat != 4) {
+                            throw new Error(
+                                "Only Notebooks in format version 4 are supported."
+                            );
+                        }
+
                         this.createWidgetStateElements(notebook);
                         const widgetManager = new WidgetManager();
                         await widgetManager.loadState();
@@ -56,11 +63,15 @@ class Notebook extends React.Component {
          *
          * TODO: Should we just set this directly on the WidgetManager? Probably
          */
-        for (const [key, value] of Object.entries(notebook.metadata.widgets)) {
-            let scriptEl = document.createElement("script");
-            scriptEl.type = key;
-            scriptEl.innerHTML = JSON.stringify(value);
-            document.body.appendChild(scriptEl);
+        if (notebook.metadata && notebook.metadata.widgets) {
+            for (const [key, value] of Object.entries(
+                notebook.metadata.widgets
+            )) {
+                let scriptEl = document.createElement("script");
+                scriptEl.type = key;
+                scriptEl.innerHTML = JSON.stringify(value);
+                document.body.appendChild(scriptEl);
+            }
         }
     }
 
@@ -107,7 +118,7 @@ class Notebook extends React.Component {
                     widgetManager: this.state.widgetManager,
                 }}
             >
-                <div className="container notebook">{contentEl}</div>;
+                <main className="container notebook">{contentEl}</main>;
             </Provider>
         );
     }
