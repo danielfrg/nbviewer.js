@@ -58,7 +58,9 @@ export default class WidgetManager extends HTMLManager {
             `script[type="${WIDGET_STATE_MIMETYPE}"]`
         );
         if (stateTags.length == 0) {
-            console.log("NBViewer.js: Didn't find widget state");
+            console.log(
+                "NBViewer.js: Didn't find widget state on the HTML page"
+            );
             return;
         }
         for (let stateTag of stateTags) {
@@ -75,6 +77,9 @@ export default class WidgetManager extends HTMLManager {
             `script[type="${WIDGET_ONCHANGE_MIMETYPE}"]`
         );
         if (onChangeTags.length == 0) {
+            console.log(
+                "NBViewer.js: Didn't find widget onChange state on the HTML page."
+            );
             return;
         }
         for (let tag of onChangeTags) {
@@ -208,8 +213,13 @@ export default class WidgetManager extends HTMLManager {
             return "index";
         } else if (model_name == "OutputModel") {
             return "outputs";
+        } else if (
+            NUMERIC_WIDGETS.includes(model_name) ||
+            BOOLEAN_WIDGETS.includes(model_name) ||
+            STRING_WIDGETS.includes(model_name)
+        ) {
+            return "value";
         }
-        return "value";
     }
 
     hash_fn(inputs) {
