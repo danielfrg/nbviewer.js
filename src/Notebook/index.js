@@ -1,0 +1,111 @@
+import React from "react";
+import { withRouter } from "react-router-dom";
+
+import { Cells } from "@nteract/presentational-components";
+
+import NBCell from "./NBCell";
+import WidgetManager from "./WidgetManager";
+import { Provider } from "./Context";
+
+class Notebook extends React.Component {
+    state = {
+        loading: false,
+        notebook: null,
+        widgetManager: null,
+    };
+
+    async componentDidMount() {
+        const { url } = this.props.match.params;
+
+        if (url) {
+            this.setState({
+                loading: true,
+            });
+
+            fetch(`https://${url}`).then(
+                async (response) => {
+                    try {
+                        const notebook = await response.json();
+
+                        this.createWidgetStateEl(notebook);
+
+                        const widgetManager = new WidgetManager();
+                        await widgetManager.loadState();
+
+                        this.setState({
+                            loading: false,
+                            notebook: notebook,
+                            widgetManager: widgetManager,
+                        });
+                    } catch (err) {
+                        console.error(err);
+                        this.setState({ error: err });
+                    }
+                },
+                (err) => {
+                    console.error(`Error fetching notebook: ${err}`);
+                    this.setState({ error: err });
+                }
+            );
+        }
+    }
+
+    createWidgetStateEl(notebook) {
+        for (const [key, value] of Object.entries(notebook.metadata.widgets)) {
+            let scriptEl = document.createElement("script");
+            scriptEl.type = key;
+            scriptEl.innerHTML = JSON.stringify(value);
+            document.body.appendChild(scriptEl);
+        }
+    }
+
+    render() {
+        // Get the notebook from props or state
+        let { notebook } = this.props;
+        if (!notebook) {
+            notebook = this.state.notebook;
+        }
+
+        let contentEl;
+
+        if (this.state.error) {
+            contentEl = (
+                <div className="loading text-center">
+                    <p className="error">Error Loading Notebook</p>
+                    <p className="error">{this.state.error.message}</p>
+                </div>
+            );
+        } else if (this.state.loading) {
+            contentEl = (
+                <div className="loading d-flex flex-row justify-content-center">
+                    <div className="text-center">
+                        <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                        <p>Downloading notebook</p>
+                    </div>
+                </div>
+            );
+        } else if (notebook) {
+            contentEl = (
+                <Cells>
+                    {notebook.cells.map((cell, i) => {
+                        return <NBCell key={i} {...cell}></NBCell>;
+                    })}
+                </Cells>
+            );
+        }
+
+        return (
+            <Provider
+                value={{
+                    widgetManager: this.state.widgetManager,
+                }}
+            >
+                <div className="container notebook">{contentEl}</div>;
+            </Provider>
+        );
+    }
+}
+
+export default withRouter(Notebook);
