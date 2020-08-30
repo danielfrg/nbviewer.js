@@ -72,19 +72,19 @@ class Home extends React.Component {
                 </p>
                 <p>
                     Examples:{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/notebooks/multiplier.ipynb">
+                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/multiplier.ipynb">
                         multiplier
                     </Link>
                     ,{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/notebooks/linked.ipynb">
+                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/linked.ipynb">
                         linked-widgets
                     </Link>
                     ,{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/notebooks/widget-gallery.ipynb">
+                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/widget-gallery.ipynb">
                         widget-gallery
                     </Link>
                     ,{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/notebooks/matplotlib.ipynb">
+                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/matplotlib.ipynb">
                         matplotlib
                     </Link>
                     .

@@ -42,8 +42,12 @@ const STRING_WIDGETS = [
     "ImageModel",
 ];
 
-export default class WidgetManager extends HTMLManager {
+export default class IllusionistWidgetManager extends HTMLManager {
     onChangeState = null;
+
+    // We save a map of ModelID to ViewScriptTag elements
+    // so we know where to render the widget
+    modelIdToViewScriptTag = {};
 
     async loadState() {
         await this.loadInitialState();
@@ -51,7 +55,7 @@ export default class WidgetManager extends HTMLManager {
     }
 
     /**
-     * Loads the widget initial state
+     * Loads the widget initial state from the HTML script tags
      */
     async loadInitialState() {
         const stateTags = document.body.querySelectorAll(
@@ -59,10 +63,11 @@ export default class WidgetManager extends HTMLManager {
         );
         if (stateTags.length == 0) {
             console.log(
-                "NBViewer.js: Didn't find widget state on the HTML page"
+                "IllusionistWidgetManager: Didn't find widget state on the HTML page"
             );
             return;
         }
+        console.log("IllusionistWidgetManager: Loading widget state");
         for (let stateTag of stateTags) {
             const widgetState = JSON.parse(stateTag.innerHTML);
             await this.set_state(widgetState);
@@ -70,7 +75,7 @@ export default class WidgetManager extends HTMLManager {
     }
 
     /**
-     * Loads the onChange widget state
+     * Loads the onChange widget state from the HTML script tags
      */
     async loadOnChangeState() {
         const onChangeTags = document.body.querySelectorAll(
@@ -78,13 +83,23 @@ export default class WidgetManager extends HTMLManager {
         );
         if (onChangeTags.length == 0) {
             console.log(
-                "NBViewer.js: Didn't find widget onChange state on the HTML page."
+                "IllusionistWidgetManager: Didn't find widget onChange state on the HTML page."
             );
             return;
         }
+        console.log("IllusionistWidgetManager: Loading widget onChange state");
         for (let tag of onChangeTags) {
-            this.onChangeState = JSON.parse(tag.innerHTML);
+            const onChangeState = JSON.parse(tag.innerHTML);
+            await this.setOnChangeState(onChangeState);
         }
+    }
+
+    /**
+     * Equivalent of WidgetManager.set_state for the onChange State from Illusionist
+     * @param {Object} onChangeState
+     */
+    async setOnChangeState(onChangeState) {
+        this.onChangeState = onChangeState;
         this.widgetAffects = {};
 
         this.onChangeState.control_widgets.forEach((controlId) => {
@@ -103,13 +118,43 @@ export default class WidgetManager extends HTMLManager {
      * Render one widgetd based on a ModelId
      */
     async renderWidget(modelId) {
-        const viewEl = document.body.querySelector(`div[id="${modelId}"]`);
+        let widgetEl = document.body.querySelector(`div[id="${modelId}"]`);
         const model = await this.get_model(modelId);
         const view = await this.create_view(model);
 
-        viewEl.innerHTML = "";
-        await this.display_view(view, viewEl);
+        if (widgetEl) {
+            // If there is a div with ID equal to the modelId
+            // Render the widget inside that element
+            widgetEl.innerHTML = "";
+        } else {
+            // If not there is not a div with ID equal to the modelID
+            // We create that div in the parent of the script tag that has that ModelId
+            // We look for the viewScriptTag on the this.modelIdToViewScriptTag map
 
+            const viewScriptTag = this.modelIdToViewScriptTag[modelId];
+
+            if (viewScriptTag) {
+                widgetEl = document.createElement("div");
+                widgetEl.id = modelId;
+                viewScriptTag.parentElement.insertBefore(
+                    widgetEl,
+                    viewScriptTag
+                );
+            } else {
+                console.error(
+                    "Couldn't not find an element where to render the widget: " +
+                        modelId
+                );
+                return;
+            }
+        }
+        console.log(widgetEl);
+        console.log(await this.get_state());
+
+        // Render Widget
+        await this.display_view(view, widgetEl);
+
+        // Set listeners for onChange state
         if (this.onChangeState) {
             if (this.onChangeState.control_widgets.includes(modelId)) {
                 // If its on the list of control widgets add the listener
@@ -124,13 +169,18 @@ export default class WidgetManager extends HTMLManager {
      * Build all the widgets
      */
     async renderAllWidgets() {
-        const viewTags = document.body.querySelectorAll(
+        const viewScriptTags = document.body.querySelectorAll(
             `script[type="${WIDGET_VIEW_MIMETYPE}"]`
         );
-        viewTags.forEach(async (viewtag) => {
+
+        viewScriptTags.forEach(async (viewScriptTag) => {
             try {
-                const widgetViewObject = JSON.parse(viewtag.innerHTML);
+                const widgetViewObject = JSON.parse(viewScriptTag.innerHTML);
                 const { model_id } = widgetViewObject;
+
+                // We save this map so we know where to render the widget
+                this.modelIdToViewScriptTag[model_id] = viewScriptTag;
+
                 await this.renderWidget(model_id);
             } catch (error) {
                 console.error(error);
@@ -139,7 +189,7 @@ export default class WidgetManager extends HTMLManager {
     }
 
     /**
-     * Handles the state update
+     * Handles the state update when a Widget changes.
      * It will trigger the update of the Widget Views.
      */
     async onWidgetChange(modelId) {
@@ -187,21 +237,21 @@ export default class WidgetManager extends HTMLManager {
                 const key = this.getWidgetValueKey(outputModel["_model_name"]);
                 state["state"][outputId]["state"][key] = outputValue;
 
-                // If its an OutputModel clear the state
-                // This avoids objects being outputed multiple times
-                // based on this.clear_state()
-                await resolvePromisesDict(this._models).then((models) => {
-                    Object.keys(models).forEach((id) => {
-                        let model = models[id];
-                        if (model.name == "OutputModel") {
-                            models[id].close();
-                            this._models[model.model_id] = null;
-                        }
-                    });
-                });
+                // If it's an OutputModel clear the state
+                // This avoids objects being rendered multiple times
+                // This part is based on WidgetManager.clear_state()
+                // await resolvePromisesDict(this._models).then((models) => {
+                //     Object.keys(models).forEach((id) => {
+                //         let model = models[id];
+                //         if (model.name == "OutputModel") {
+                //             models[id].close();
+                //             this._models[model.model_id] = null;
+                //         }
+                //     });
+                // });
 
                 await this.set_state(state);
-                if (outputModel["_model_name"] == "OuptuModel") {
+                if (outputModel["_model_name"] == "OutputModel") {
                     this.renderWidget(outputId);
                 }
             }

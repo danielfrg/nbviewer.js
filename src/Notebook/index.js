@@ -4,20 +4,32 @@ import { withRouter, Link } from "react-router-dom";
 import { Cells } from "@nteract/presentational-components";
 
 import NBCell from "./NBCell";
-import WidgetManager from "./WidgetManager";
+import IllusionistWidgetManager from "./WidgetManager";
 import { Provider } from "./Context";
 
 class Notebook extends React.Component {
-    state = {
-        loading: false,
-        notebook: null,
-        widgetManager: null,
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: false,
+            notebook: null,
+            widgetManager: null,
+        };
+    }
 
     async componentDidMount() {
+        const { notebook } = this.props;
         const { url } = this.props.match.params;
 
-        if (url) {
+        if (notebook) {
+            try {
+                await this.initNotebook(notebook);
+            } catch (err) {
+                console.error(err);
+                this.setState({ error: err });
+            }
+        } else if (url) {
             this.setState({
                 loading: true,
             });
@@ -26,23 +38,7 @@ class Notebook extends React.Component {
                 async (response) => {
                     try {
                         const notebook = await response.json();
-
-                        const { nbformat } = notebook;
-                        if (nbformat != 4) {
-                            throw new Error(
-                                "Only Notebooks in format version 4 are supported."
-                            );
-                        }
-
-                        this.createWidgetStateElements(notebook);
-                        const widgetManager = new WidgetManager();
-                        await widgetManager.loadState();
-
-                        this.setState({
-                            loading: false,
-                            notebook: notebook,
-                            widgetManager: widgetManager,
-                        });
+                        await this.initNotebook(notebook);
                     } catch (err) {
                         console.error(err);
                         this.setState({ error: err });
@@ -54,6 +50,25 @@ class Notebook extends React.Component {
                 }
             );
         }
+    }
+
+    async initNotebook(notebook) {
+        const { nbformat } = notebook;
+        if (nbformat != 4) {
+            throw new Error(
+                "Only Notebooks in format version 4 are supported."
+            );
+        }
+
+        this.createWidgetStateElements(notebook);
+        const widgetManager = new IllusionistWidgetManager();
+        await widgetManager.loadState();
+
+        this.setState({
+            notebook: notebook,
+            widgetManager: widgetManager,
+            loading: false,
+        });
     }
 
     createWidgetStateElements(notebook) {
@@ -77,12 +92,7 @@ class Notebook extends React.Component {
 
     render() {
         const { url } = this.props.match.params;
-
-        // Get the notebook from props or state
-        let { notebook } = this.props;
-        if (!notebook) {
-            notebook = this.state.notebook;
-        }
+        const { notebook } = this.state;
 
         let contentEl;
 
@@ -108,9 +118,9 @@ class Notebook extends React.Component {
             contentEl = (
                 <Fragment>
                     <div className="action-buttons float-right">
-                        <Link to="/">
+                        <a href="/">
                             <span className="material-icons">home</span>
-                        </Link>
+                        </a>
                         {url ? (
                             <a
                                 href={`//${url}`}

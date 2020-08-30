@@ -14,9 +14,11 @@ class App extends React.Component {
                         path="/"
                         render={(props) => <Home {...props} />}
                     ></Route>
-                    <Route exact path="/url/:url+">
-                        <Notebook />
-                    </Route>
+                    <Route
+                        exact
+                        path="/url/:url+"
+                        render={(props) => <Notebook {...props} />}
+                    ></Route>
                 </Switch>
             </Router>
         );
