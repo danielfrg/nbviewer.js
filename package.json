@@ -17,7 +17,7 @@
     ],
     "main": "src/index.js",
     "dependencies": {
-        "@jupyter-widgets/html-manager": "^0.20.0-alpha.0",
+        "@danielfrg/illusionist": "^0.1.2",
         "@nteract/outputs": "^3.0.9",
         "@nteract/presentational-components": "^3.3.14",
         "@primer/css": "^15.1.0",

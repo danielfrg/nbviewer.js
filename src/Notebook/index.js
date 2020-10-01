@@ -2,13 +2,13 @@ import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 
 import { Cells } from "@nteract/presentational-components";
-
-import NBCell from "./NBCell";
-import { Provider } from "./Context";
 import IllusionistWidgetManager, {
     WIDGET_STATE_MIMETYPE,
     WIDGET_ONCHANGE_MIMETYPE,
-} from "./WidgetManager";
+} from "@danielfrg/illusionist";
+
+import NBCell from "./NBCell";
+import { Provider } from "./Context";
 
 class Notebook extends React.Component {
     constructor(props) {
