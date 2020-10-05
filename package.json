@@ -1,34 +1,51 @@
 {
     "name": "@danielfrg/nbviewer.js",
-    "version": "1.0.0",
-    "description": "",
+    "version": "0.1.0",
+    "description": "Jupyter Notebook Viewer",
     "author": "Daniel Rodriguez",
     "license": "Apache-2.0",
     "homepage": "https://github.com/danielfrg/nbviewer.js",
-    "bugs": {
-        "url": "https://github.com/danielfrg/nbviewer.js/issues"
-    },
     "repository": {
         "type": "git",
         "url": "https://github.com/danielfrg/nbviewer.js"
     },
-    "browserslist": [
-        "last 2 Chrome versions"
+    "bugs": {
+        "url": "https://github.com/danielfrg/nbviewer.js/issues"
+    },
+    "keywords": [
+        "jupyter",
+        "notebook",
+        "nbviewer"
     ],
-    "main": "src/index.js",
+    "scripts": {
+        "dev": "npm run clean && webpack-dev-server --mode=development",
+        "dev:noserver": "npm run clean && webpack --watch --mode=development",
+        "build": "npm run clean && webpack --mode=production",
+        "build:watch": "npm run clean && webpack --mode=production --watch",
+        "fmt": "prettier --write \"src/**/*.{js,jsx}\"",
+        "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+        "clean": "rm -rf .cache/ dist/ lib/",
+        "reset": "npm run clean && rm -rf node_modules",
+        "test": "jest --silent",
+        "test:coverage": "jest --coverage",
+        "test:update": "jest -u",
+        "test:watch": "jest --watch"
+    },
     "dependencies": {
-        "@danielfrg/illusionist": "^0.2.0",
-        "@nteract/outputs": "^3.0.9",
-        "@nteract/presentational-components": "^3.3.14",
-        "@primer/css": "^15.1.0",
-        "papaparse": "^5.3.0",
+        "@danielfrg/jupyter-flex": "^0.7.0-beta.0",
+        "@danielfrg/illusionist": "^0.3.0-beta.0",
+        "@nteract/mathjax": "4.0.9",
+        "@nteract/outputs": "3.0.9",
+        "@nteract/presentational-components": "3.3.14",
+        "@primer/css": "^14.4.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "react-dropzone": "^11.0.3",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "react-dropzone": "^11.0.3"
     },
     "devDependencies": {
-        "@babel/core": "^7.10.2",
+        "@babel/cli": "^7.11.6",
+        "@babel/core": "^7.11.6",
         "@babel/plugin-proposal-class-properties": "^7.4.0",
         "@babel/preset-env": "^7.10.2",
         "@babel/preset-react": "^7.0.0",
@@ -46,32 +63,21 @@
         "eslint-plugin-react": "^7.20.0",
         "eslint-plugin-react-hooks": "^4.0.4",
         "file-loader": "^6.0.0",
+        "filemanager-webpack-plugin": "^3.0.0-alpha.1",
         "html-webpack-plugin": "^4.3.0",
         "jest": "^26.0.1",
         "mini-css-extract-plugin": "^0.9.0",
+        "null-loader": "^4.0.0",
         "prettier": "^2.0.5",
         "react-test-renderer": "^16.13.1",
         "sass": "^1.26.8",
         "sass-loader": "^8.0.2",
         "style-loader": "^1.2.1",
-        "styled-components": "^5.1.1",
+        "styled-components": "^5.2.0",
         "url-loader": "^4.1.0",
         "webpack": "^4.43.0",
+        "webpack-bundle-analyzer": "^3.9.0",
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.11.0"
-    },
-    "scripts": {
-        "dev": "webpack-dev-server --mode=development",
-        "dev:noserver": "webpack --watch --mode=development",
-        "build": "webpack --mode=production",
-        "build:watch": "webpack --mode=production --watch",
-        "fmt": "prettier --write \"src/**/*.{js,jsx}\"",
-        "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-        "clean": "rm -rf .cache/ dist/ lib/",
-        "reset": "npm run clean && rm -rf node_modules",
-        "test": "jest --silent",
-        "test:coverage": "jest --coverage",
-        "test:update": "jest -u",
-        "test:watch": "jest --watch"
     }
 }

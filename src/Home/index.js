@@ -40,8 +40,20 @@ class Home extends React.Component {
                     <a href="https://nbviewer.jupyter.org/">
                         nbviewer.jupyter.org
                     </a>{" "}
-                    but without the dependency on an server to do the conversion
-                    of the Notebooks.
+                    but without the dependency on a external server to do the
+                    conversion of the notebook.
+                </p>
+                <p>
+                    Additionally it supports{" "}
+                    <a href="https://illusionist.extrapolations.dev/">
+                        illusionist
+                    </a>
+                    , this allows you to deploy client-only Notebooks with
+                    widgets, and{" "}
+                    <a href="https://jupyter-flex.extrapolations.dev/">
+                        jupyter-flex
+                    </a>{" "}
+                    dashboards.
                 </p>
                 <p>
                     It&apos;s built using{" "}
@@ -51,72 +63,79 @@ class Home extends React.Component {
                     </a>
                     .
                 </p>
-                <p>
-                    Examples:{" "}
-                    <Link to="/url/raw.githubusercontent.com/jrjohansson/scientific-python-lectures/master/Lecture-4-Matplotlib.ipynb">
-                        Matplotlib Tutorial
-                    </Link>
-                    ,{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/nbviewer.js/master/examples/data-types.ipynb">
-                        Data types
-                    </Link>
-                    .
-                </p>
-                <p>
-                    Additionally it supports{" "}
-                    <a href="https://illusionist.extrapolations.dev/">
-                        illusionist
-                    </a>
-                    , this allows you to deploy client-only Notebooks with
-                    widgets.
-                </p>
-                <p>
-                    Examples:{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/multiplier.ipynb">
-                        multiplier
-                    </Link>
-                    ,{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/linked.ipynb">
-                        linked-widgets
-                    </Link>
-                    ,{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/widget-gallery.ipynb">
-                        widget-gallery
-                    </Link>
-                    ,{" "}
-                    <Link to="/url/raw.githubusercontent.com/danielfrg/illusionist/master/examples/matplotlib.ipynb">
-                        matplotlib
-                    </Link>
-                    .
-                </p>
             </Modal>
         );
 
         return (
             <Fragment>
-                <div className="home container d-flex w-100 h-100 p-3 mx-auto flex-column">
-                    <main>
-                        <h1 className="text-center">nbviewer.js</h1>
+                <div className="home">
+                    <div className="content container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                        <main>
+                            <h1 className="text-center">nbviewer.js</h1>
 
-                        <p className="text-center">
-                            Upload a file or paste an URL
-                        </p>
+                            <p className="text-center">
+                                Upload a file or paste an URL
+                            </p>
 
-                        <Drop onDrop={this.onDrop} />
-                        <URLForm onSubmit={this.onSubmit} />
-                    </main>
-                    <footer className="mt-auto text-center">
-                        <p>
-                            <button onClick={this.toggleModal}>About</button>.
-                            Built by{" "}
-                            <a href="https://danielfrg.com">Daniel Rodriguez</a>
-                            .{" "}
-                            <a href="https://github.com/danielfrg/nbviewer.js">
-                                Code on Github
-                            </a>
-                            .
-                        </p>
-                    </footer>
+                            <URLForm onSubmit={this.onSubmit} />
+                            <Drop onDrop={this.onDrop} />
+
+                            <p>
+                                Examples:{" "}
+                                <Link to="/nb/raw.githubusercontent.com/jrjohansson/scientific-python-lectures/master/Lecture-4-Matplotlib.ipynb">
+                                    Matplotlib Tutorial
+                                </Link>
+                                ,{" "}
+                                <Link to="/nb/raw.githubusercontent.com/danielfrg/nbviewer.js/master/examples/data-types.ipynb">
+                                    Data types
+                                </Link>
+                                .
+                            </p>
+
+                            <p>
+                                Illusionist examples:{" "}
+                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/multiplier.ipynb">
+                                    multiplier
+                                </Link>
+                                ,{" "}
+                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/linked.ipynb">
+                                    linked-widgets
+                                </Link>
+                                ,{" "}
+                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/widget-gallery.ipynb">
+                                    widget-gallery
+                                </Link>
+                                ,{" "}
+                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/matplotlib.ipynb">
+                                    matplotlib
+                                </Link>
+                                .
+                            </p>
+
+                            <p>
+                                Jupyter-flex dashboard examples:{" "}
+                                <Link to="/flex/raw.githubusercontent.com/jrjohansson/scientific-python-lectures/master/Lecture-4-Matplotlib.ipynb">
+                                    Demo
+                                </Link>
+                                .
+                            </p>
+                        </main>
+                        <footer className="mt-auto text-center">
+                            <p>
+                                <button onClick={this.toggleModal}>
+                                    About
+                                </button>{" "}
+                                &bull; Built by{" "}
+                                <a href="https://danielfrg.com">
+                                    Daniel Rodriguez
+                                </a>{" "}
+                                &bull;{" "}
+                                <a href="https://github.com/danielfrg/nbviewer.js">
+                                    Code on Github
+                                </a>
+                            </p>
+                        </footer>
+                    </div>
                 </div>
 
                 {this.state.showModal ? sourceModal : null}

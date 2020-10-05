@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./App";
-import "./style.scss"
+import NBViewerApp from "./App";
+import "./styles/index.scss";
 
-ReactDOM.render(<App />, document.getElementById("nbviewer-root"));
+ReactDOM.render(<NBViewerApp />, document.getElementById("nbviewer-root"));
