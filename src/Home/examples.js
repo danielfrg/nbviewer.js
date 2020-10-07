@@ -27,17 +27,17 @@ function Examples() {
             <div className="image-grid d-flex flex-wrap">
                 <Image
                     to="/flex/5f7d05f75b943500c94357e7--jupyter-flex.netlify.app/examples/notebooks/altair.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/plots/altair.png"
+                    img="https://jupyter-flex.netlify.app//assets/img/screenshots/plots/altair.png"
                     text="Altair plots"
                 />
                 <Image
                     to="/flex/5f7d05f75b943500c94357e7--jupyter-flex.netlify.app/examples/notebooks/ipywidgets-gallery.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/widgets/ipywidgets-gallery.png"
+                    img="https://jupyter-flex.netlify.app//assets/img/screenshots/widgets/ipywidgets-gallery.png"
                     text="Jupyter widgets"
                 />
                 <Image
                     to="/flex/5f7d05f75b943500c94357e7--jupyter-flex.netlify.app/examples/notebooks/nba-scoring.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/nba-scoring.png"
+                    img="https://jupyter-flex.netlify.app//assets/img/screenshots/nba-scoring.png"
                     text="NBA Scoring"
                 />
             </div>
