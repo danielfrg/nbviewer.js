@@ -7,14 +7,16 @@
     color: #ff0000;
 }
 
-.modal {
-    font-size: 0.9em;
+#nbviewer-modal {
+    .modal {
+        font-size: 0.9em;
 
-    .modal-dialog {
-        margin: 200px auto;
+        .modal-dialog {
+            margin: 200px auto;
 
-        .modal-title {
-            font-size: 1.1em;
+            .modal-title {
+                font-size: 1.1em;
+            }
         }
     }
 }

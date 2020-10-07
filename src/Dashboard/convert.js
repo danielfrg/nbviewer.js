@@ -1,7 +1,7 @@
 var _ = require("lodash");
 
 function notebook2dashboard(notebook) {
-    console.log(notebook);
+    // console.log(notebook);
     let dashboard = { meta: [], pages: [] };
     let current_page = {};
     let current_section = {};
@@ -36,13 +36,13 @@ function notebook2dashboard(notebook) {
             if (is_body || is_help || is_footer) {
                 // Check if current_* objects are created
                 // Used when the notebook starts with tagged cell
-                if (!current_page) {
+                if (_.isEmpty(current_page)) {
                     current_page = _.cloneDeep(empty_page);
                 }
-                if (!current_section) {
+                if (_.isEmpty(current_section)) {
                     current_section = _.cloneDeep(empty_section);
                 }
-                if (!current_card) {
+                if (_.isEmpty(current_card)) {
                     current_card = _.cloneDeep(empty_card);
                 }
             }
@@ -180,7 +180,7 @@ function notebook2dashboard(notebook) {
         dashboard.pages.push(current_page);
     }
 
-    console.log(dashboard);
+    // console.log(dashboard);
     return dashboard;
 }
 

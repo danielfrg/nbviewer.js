@@ -8,7 +8,6 @@ import IllusionistWidgetManager, {
 import JupyterFlexDashboard from "@danielfrg/jupyter-flex";
 import { DashboardProvider } from "@danielfrg/jupyter-flex";
 
-// import test_nb from "./demo";
 import notebook2dashboard from "./convert";
 
 class Dashboard extends React.Component {
@@ -17,10 +16,8 @@ class Dashboard extends React.Component {
 
         this.state = {
             loading: true,
-            // loading: false,
-            error: null, //Should be like: { title: "", err: "" }
+            error: null, // Should be like: { title: "", err: "" }
             dashboard: null,
-            // dashboard: test_nb,
             widgetManager: null,
         };
     }
@@ -33,13 +30,20 @@ class Dashboard extends React.Component {
             try {
                 await this.initNotebook(notebook);
             } catch (err) {
+                console.error(`Error parsing notebook: ${err}`);
                 console.error(err);
-                this.setState({ error: err });
+                this.setState({
+                    error: {
+                        title: "Error parsing notebook",
+                        err: err,
+                    },
+                });
             }
         } else if (url) {
             this.setState({
                 loading: true,
             });
+
             fetch(`//${url}`).then(
                 async (response) => {
                     if (!response.ok) {
@@ -53,6 +57,7 @@ class Dashboard extends React.Component {
                         });
                         return;
                     }
+
                     try {
                         const notebook = await response.json();
                         await this.initNotebook(notebook);
@@ -68,8 +73,8 @@ class Dashboard extends React.Component {
                     }
                 },
                 (err) => {
-                    // console.error(`Error fetching notebook: ${err}`);
-                    // this.setState({ error: err });
+                    console.error(`Error fetching notebook: ${err}`);
+                    this.setState({ error: err });
                     this.setState({
                         error: { title: "Error fetching notebook", err: err },
                     });
@@ -116,7 +121,7 @@ class Dashboard extends React.Component {
     render() {
         // TODO: We could use this url as the source code link on the dashboard
         // const { url } = this.props.match.params;
-        const { loading, dashboard, error } = this.state;
+        const { loading, dashboard, error, widgetManager } = this.state;
 
         let contentEl;
 
@@ -149,12 +154,10 @@ class Dashboard extends React.Component {
             );
         }
 
-        // return <div className="jupyter-flex-page">{contentEl}</div>;
-
         return (
             <DashboardProvider
                 value={{
-                    widgetManager: this.state.widgetManager,
+                    widgetManager: widgetManager,
                 }}
             >
                 <div className="jupyter-flex-page">{contentEl}</div>
@@ -163,5 +166,4 @@ class Dashboard extends React.Component {
     }
 }
 
-// export default Dashboard;
 export default withRouter(Dashboard);

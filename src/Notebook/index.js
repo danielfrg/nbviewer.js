@@ -6,9 +6,7 @@ import IllusionistWidgetManager, {
     WIDGET_STATE_MIMETYPE,
     WIDGET_ONCHANGE_MIMETYPE,
 } from "@danielfrg/illusionist";
-import { DashboardProvider } from "@danielfrg/jupyter-flex";
-
-import NBCell from "./NBCell";
+import { DashboardProvider, DashboardCell } from "@danielfrg/jupyter-flex";
 
 class Notebook extends React.Component {
     constructor(props) {
@@ -16,6 +14,7 @@ class Notebook extends React.Component {
 
         this.state = {
             loading: false,
+            error: null, // Should be like: { title: "", err: "" }
             notebook: null,
             widgetManager: null,
         };
@@ -29,8 +28,14 @@ class Notebook extends React.Component {
             try {
                 await this.initNotebook(notebook);
             } catch (err) {
+                console.error(`Error parsing notebook: ${err}`);
                 console.error(err);
-                this.setState({ error: err });
+                this.setState({
+                    error: {
+                        title: "Error parsing notebook",
+                        err: err,
+                    },
+                });
             }
         } else if (url) {
             this.setState({
@@ -39,17 +44,38 @@ class Notebook extends React.Component {
 
             fetch(`//${url}`).then(
                 async (response) => {
+                    if (!response.ok) {
+                        this.setState({
+                            error: {
+                                title: "Error fetching notebook",
+                                err: {
+                                    message: `Status code: ${response.status}`,
+                                },
+                            },
+                        });
+                        return;
+                    }
+
                     try {
                         const notebook = await response.json();
                         await this.initNotebook(notebook);
                     } catch (err) {
+                        console.error(`Error parsing notebook: ${err}`);
                         console.error(err);
-                        this.setState({ error: err });
+                        this.setState({
+                            error: {
+                                title: "Error parsing notebook",
+                                err: err,
+                            },
+                        });
                     }
                 },
                 (err) => {
                     console.error(`Error fetching notebook: ${err}`);
                     this.setState({ error: err });
+                    this.setState({
+                        error: { title: "Error fetching notebook", err: err },
+                    });
                 }
             );
         }
@@ -91,18 +117,22 @@ class Notebook extends React.Component {
 
     render() {
         const { url } = this.props.match.params;
-        const { notebook } = this.state;
+        const { loading, notebook, error, widgetManager } = this.state;
 
         let contentEl;
 
-        if (this.state.error) {
+        if (error) {
             contentEl = (
                 <div className="loading text-center">
-                    <p className="error">Error Loading Notebook</p>
-                    <p className="error">{this.state.error.message}</p>
+                    <p className="error">{error.title}</p>
+                    <p className="error">
+                        {error.err.message
+                            ? error.err.message
+                            : "See console log for details."}
+                    </p>
                 </div>
             );
-        } else if (this.state.loading) {
+        } else if (loading) {
             contentEl = (
                 <div className="loading d-flex flex-row justify-content-center">
                     <div className="text-center">
@@ -136,7 +166,12 @@ class Notebook extends React.Component {
                     </div>
                     <Cells className="cells">
                         {notebook.cells.map((cell, i) => {
-                            return <NBCell key={i} {...cell}></NBCell>;
+                            return (
+                                <DashboardCell
+                                    key={i}
+                                    {...cell}
+                                ></DashboardCell>
+                            );
                         })}
                     </Cells>
                 </Fragment>
@@ -146,7 +181,7 @@ class Notebook extends React.Component {
         return (
             <DashboardProvider
                 value={{
-                    widgetManager: this.state.widgetManager,
+                    widgetManager: widgetManager,
                 }}
             >
                 <main className="notebook container w-100 h-100 p-3 mx-auto">
