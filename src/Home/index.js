@@ -22,7 +22,7 @@ class Home extends React.Component {
 
     onSubmit = (url) => {
         let target = url.href.substring(url.protocol.length + 2);
-        this.props.history.push(`/url/${target}`);
+        this.props.history.push(`/nb/${target}`);
     };
 
     toggleModal = () => this.setState({ showModal: !this.state.showModal });
@@ -114,7 +114,7 @@ class Home extends React.Component {
 
                             <p>
                                 Jupyter-flex dashboard examples:{" "}
-                                <Link to="/flex/raw.githubusercontent.com/jrjohansson/scientific-python-lectures/master/Lecture-4-Matplotlib.ipynb">
+                                <Link to="/flex/raw.githubusercontent.com/danielfrg/jupyter-flex/master/examples/layouts/grid-2x2.ipynb">
                                     Demo
                                 </Link>
                                 .

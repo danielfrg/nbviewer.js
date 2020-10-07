@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import JupyterFlexDashboard from "@danielfrg/jupyter-flex";
 
-// import { Provider } from "./Context";
+import notebook2dashboard from "./utils";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
             this.setState({
                 loading: true,
             });
-            fetch(`https://${url}`).then(
+            fetch(`http://${url}`).then(
                 async (response) => {
                     try {
                         const notebook = await response.json();
@@ -49,13 +49,14 @@ class Dashboard extends React.Component {
     }
 
     async initNotebook(notebook) {
-        console.log(notebook);
         const { nbformat } = notebook;
         if (nbformat != 4) {
             throw new Error(
                 "Only Notebooks in format version 4 are supported."
             );
         }
+
+        const dashboard = notebook2dashboard(notebook);
 
         // if (notebook.metadata.widgets) {
         //     const widgetManager = new IllusionistWidgetManager();
@@ -77,148 +78,8 @@ class Dashboard extends React.Component {
         //     });
         // }
 
-        const test_dashboard = {
-            meta: [],
-            pages: [
-                {
-                    sections: [
-                        {
-                            cards: [
-                                {
-                                    body: [
-                                        {
-                                            cell_type: "code",
-                                            execution_count: 2,
-                                            metadata: {
-                                                execution: {
-                                                    "iopub.execute_input":
-                                                        "2020-10-04T19:55:10.331006Z",
-                                                    "iopub.status.busy":
-                                                        "2020-10-04T19:55:10.327393Z",
-                                                    "iopub.status.idle":
-                                                        "2020-10-04T19:55:10.332668Z",
-                                                    "shell.execute_reply":
-                                                        "2020-10-04T19:55:10.331880Z",
-                                                },
-                                                tags: ["body"],
-                                                trusted: true,
-                                            },
-                                            outputs: [],
-                                        },
-                                    ],
-                                    footer: [],
-                                    header: "Subplot 1-1",
-                                    help: [],
-                                    tags: [],
-                                },
-                                {
-                                    body: [
-                                        {
-                                            cell_type: "code",
-                                            execution_count: 3,
-                                            metadata: {
-                                                execution: {
-                                                    "iopub.execute_input":
-                                                        "2020-10-04T19:55:10.343556Z",
-                                                    "iopub.status.busy":
-                                                        "2020-10-04T19:55:10.341711Z",
-                                                    "iopub.status.idle":
-                                                        "2020-10-04T19:55:10.345057Z",
-                                                    "shell.execute_reply":
-                                                        "2020-10-04T19:55:10.344362Z",
-                                                },
-                                                tags: ["body"],
-                                                trusted: true,
-                                            },
-                                            outputs: [],
-                                        },
-                                    ],
-                                    footer: [],
-                                    header: "Subplot 1-2",
-                                    help: [],
-                                    tags: [],
-                                },
-                            ],
-                            tags: [],
-                            title: "Column 1",
-                        },
-                        {
-                            cards: [
-                                {
-                                    body: [
-                                        {
-                                            cell_type: "code",
-                                            execution_count: 4,
-                                            metadata: {
-                                                execution: {
-                                                    "iopub.execute_input":
-                                                        "2020-10-04T19:55:10.354572Z",
-                                                    "iopub.status.busy":
-                                                        "2020-10-04T19:55:10.352840Z",
-                                                    "iopub.status.idle":
-                                                        "2020-10-04T19:55:10.355977Z",
-                                                    "shell.execute_reply":
-                                                        "2020-10-04T19:55:10.355321Z",
-                                                },
-                                                tags: ["body"],
-                                                trusted: true,
-                                            },
-                                            outputs: [],
-                                        },
-                                    ],
-                                    footer: [],
-                                    header: "Subplot 2-1",
-                                    help: [],
-                                    tags: [],
-                                },
-                                {
-                                    body: [
-                                        {
-                                            cell_type: "code",
-                                            execution_count: 5,
-                                            metadata: {
-                                                execution: {
-                                                    "iopub.execute_input":
-                                                        "2020-10-04T19:55:10.364754Z",
-                                                    "iopub.status.busy":
-                                                        "2020-10-04T19:55:10.362783Z",
-                                                    "iopub.status.idle":
-                                                        "2020-10-04T19:55:10.366234Z",
-                                                    "shell.execute_reply":
-                                                        "2020-10-04T19:55:10.365587Z",
-                                                },
-                                                tags: ["body"],
-                                                trusted: true,
-                                            },
-                                            outputs: [],
-                                        },
-                                    ],
-                                    footer: [],
-                                    header: "Subplot 2-2",
-                                    help: [],
-                                    tags: [],
-                                },
-                            ],
-                            tags: [],
-                            title: "Column 2",
-                        },
-                    ],
-                    tags: [],
-                    title: "",
-                },
-            ],
-            props: {
-                author: "built using jupyter-flex",
-                include_source: false,
-                kernel_name: "Python 3",
-                source_link:
-                    "https://github.com/danielfrg/jupyter-flex/blob/master/examples/layouts/grid-2x2.ipynb",
-                title: "grid-2x2",
-            },
-        };
-
         this.setState({
-            dashboard: test_dashboard,
+            dashboard: dashboard,
             loading: false,
         });
     }

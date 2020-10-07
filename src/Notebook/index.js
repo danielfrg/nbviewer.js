@@ -37,7 +37,7 @@ class Notebook extends React.Component {
                 loading: true,
             });
 
-            fetch(`https://${url}`).then(
+            fetch(`http://${url}`).then(
                 async (response) => {
                     try {
                         const notebook = await response.json();
