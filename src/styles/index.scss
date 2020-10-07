@@ -26,8 +26,8 @@
 }
 
 .home {
+    max-width: 960px;
     height: 100%;
-    max-width: 650px;
     margin: auto;
     padding-top: 50px !important;
     font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -35,8 +35,12 @@
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
     h1 {
-        font-size: 5.5em;
+        font-size: 4em;
         margin-bottom: 0.5em;
+
+        @media (min-width: 576px) {
+            font-size: 5.5em;
+        }
     }
 
     .dropzone {
@@ -106,9 +110,92 @@
     }
 }
 
+.examples {
+    margin: 0 auto;
+    margin-bottom: 50px !important;
+    padding: 0;
+    @media (min-width: 576px) {
+        flex-direction: row;
+    }
+    @media (min-width: 1024px) {
+        padding: 0;
+    }
+
+    h2 {
+        margin-top: 30px;
+    }
+}
+
+.image-grid {
+    display: flex;
+    flex: 1 1 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0;
+
+    @media (min-width: 576px) {
+        flex-direction: row;
+    }
+
+    .image-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+
+        @media (min-width: 576px) {
+            width: 300px;
+        }
+
+        &:hover {
+            background-color: #99999924;
+        }
+
+        a {
+            color: #676767;
+            &:hover {
+                color: #676767;
+            }
+        }
+
+        figure {
+            &:hover {
+                background: none;
+            }
+        }
+
+        figcaption {
+            color: #676767;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 10px;
+
+            &:hover {
+                color: #676767;
+            }
+        }
+    }
+
+    img {
+        margin: auto;
+        width: 100%;
+        vertical-align: middle;
+
+        @media (min-width: 576px) {
+            padding-bottom: 0;
+        }
+    }
+}
+
 .notebook {
-    @import "@primer/css/markdown/index.scss";
+    // @import "@primer/css/markdown/index.scss";
     max-width: 960px;
+    padding-top: 0px !important;
+
+    @media (min-width: 576px) {
+        padding-top: 10px !important;
+    }
 
     .loading {
         margin: 100px auto;
@@ -119,8 +206,16 @@
         }
     }
 
+    a {
+        word-break: break-all;
+    }
+
     .action-buttons {
-        padding: 30px 10px 0;
+        padding: 0px 10px 0;
+
+        @media (min-width: 576px) {
+            padding-top: 30px;
+        }
 
         a,
         button {
@@ -139,9 +234,9 @@
         padding: 9px 12px;
     }
 
-    .markdown-body {
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-    }
+    // .markdown-body {
+    //     input[type="checkbox"] {
+    //         margin-right: 10px;
+    //     }
+    // }
 }

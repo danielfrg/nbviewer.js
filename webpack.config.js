@@ -64,7 +64,10 @@ module.exports = (env, argv) => {
         ],
         devServer: {
             port: 3000,
-            contentBase: path.resolve(__dirname, "dist"),
+            contentBase: [
+                path.resolve(__dirname, "dist"),
+                path.resolve(__dirname, "static"),
+            ],
             historyApiFallback: { index: "/", disableDotRule: true },
         },
         node: {

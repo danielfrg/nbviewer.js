@@ -131,7 +131,7 @@ class Dashboard extends React.Component {
                     <div className="text-center">
                         <p className="error">{error.title}</p>
                         <p className="error">
-                            {error.err.message
+                            {error.err && error.err.message
                                 ? error.err.message
                                 : "See console log for details."}
                         </p>

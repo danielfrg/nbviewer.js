@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 
+import Drop from "./drop";
+import Examples from "./examples";
+import Modal from "./modal";
+import URLForm from "./urlform";
 import Notebook from "../Notebook";
-import URLForm from "./URLForm";
-import Drop from "./Drop";
-import Modal from "./Modal";
-import { Link } from "react-router-dom";
 
 class Home extends React.Component {
     constructor(props) {
@@ -73,52 +73,13 @@ class Home extends React.Component {
                         <main>
                             <h1 className="text-center">nbviewer.js</h1>
 
-                            <p className="text-center">
-                                Upload a file or paste an URL
+                            <p className="text-center subtitle">
+                                Upload a file or paste an URL to render it:
                             </p>
 
                             <URLForm onSubmit={this.onSubmit} />
                             <Drop onDrop={this.onDrop} />
-
-                            <p>
-                                Examples:{" "}
-                                <Link to="/nb/raw.githubusercontent.com/jrjohansson/scientific-python-lectures/master/Lecture-4-Matplotlib.ipynb">
-                                    Matplotlib Tutorial
-                                </Link>
-                                ,{" "}
-                                <Link to="/nb/raw.githubusercontent.com/danielfrg/nbviewer.js/master/examples/data-types.ipynb">
-                                    Data types
-                                </Link>
-                                .
-                            </p>
-
-                            <p>
-                                Illusionist examples:{" "}
-                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/multiplier.ipynb">
-                                    multiplier
-                                </Link>
-                                ,{" "}
-                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/linked.ipynb">
-                                    linked-widgets
-                                </Link>
-                                ,{" "}
-                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/widget-gallery.ipynb">
-                                    widget-gallery
-                                </Link>
-                                ,{" "}
-                                <Link to="/nb/raw.githubusercontent.com/danielfrg/illusionist/master/examples/matplotlib.ipynb">
-                                    matplotlib
-                                </Link>
-                                .
-                            </p>
-
-                            <p>
-                                Jupyter-flex dashboard examples:{" "}
-                                <Link to="/flex/raw.githubusercontent.com/danielfrg/jupyter-flex/master/examples/layouts/grid-2x2.ipynb">
-                                    Demo
-                                </Link>
-                                .
-                            </p>
+                            <Examples />
                         </main>
                         <footer className="mt-auto text-center">
                             <p>
