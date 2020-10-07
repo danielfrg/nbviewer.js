@@ -11,10 +11,11 @@ function notebook2dashboard(notebook) {
     const empty_section = { title: "", cards: [], tags: [] };
     const empty_card = {
         title: "",
+        tags: [],
         body: [],
         footer: [],
         help: [],
-        tags: [],
+        source: [],
     };
 
     notebook.cells.forEach((cell) => {
@@ -65,10 +66,10 @@ function notebook2dashboard(notebook) {
 
                 // Check for when the notebook starts with h3 -> create first page and section
                 if (_.isEmpty(current_page)) {
-                    current_page = empty_page;
+                    current_page = _.cloneDeep(empty_page);
                 }
                 if (_.isEmpty(current_section)) {
-                    current_section = empty_section;
+                    current_section = _.cloneDeep(empty_section);
                 }
 
                 // Add current card to current section
@@ -86,7 +87,7 @@ function notebook2dashboard(notebook) {
 
                 // Check for when the notebook starts with h2 -> create first page
                 if (_.isEmpty(current_page)) {
-                    current_page = empty_page;
+                    current_page = _.cloneDeep(empty_page);
                 }
 
                 // Add current card to current section
@@ -154,16 +155,16 @@ function notebook2dashboard(notebook) {
 
             if (is_body) {
                 current_card.body.push(cell);
+            } else if (is_footer) {
+                current_card.footer.push(cell);
+            } else if (is_meta) {
+                dashboard.meta.push(cell);
+            } else if (is_help) {
+                current_card.help.push(cell);
             } else if (is_source) {
                 // TODO Check this actually works
                 cell.outputs = null;
                 current_card.body.push(cell);
-            } else if (is_help) {
-                current_card.help.push(cell);
-            } else if (is_footer) {
-                current_card.footer.push(cell);
-            } else if (is_meta) {
-                current_card.meta.push(cell);
             }
         }
     });

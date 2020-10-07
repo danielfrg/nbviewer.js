@@ -1,10 +1,15 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
+import IllusionistWidgetManager, {
+    WIDGET_STATE_MIMETYPE,
+    WIDGET_ONCHANGE_MIMETYPE,
+} from "@danielfrg/illusionist";
 import JupyterFlexDashboard from "@danielfrg/jupyter-flex";
+import { DashboardProvider } from "@danielfrg/jupyter-flex";
 
-import test_nb from "./demo";
-import notebook2dashboard from "./utils";
+// import test_nb from "./demo";
+import notebook2dashboard from "./convert";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -13,7 +18,8 @@ class Dashboard extends React.Component {
         this.state = {
             loading: true,
             // loading: false,
-            dashboard: test_nb,
+            error: null, //Should be like: { title: "", err: "" }
+            dashboard: null,
             // dashboard: test_nb,
             widgetManager: null,
         };
@@ -34,19 +40,39 @@ class Dashboard extends React.Component {
             this.setState({
                 loading: true,
             });
-            fetch(`http://${url}`).then(
+            fetch(`//${url}`).then(
                 async (response) => {
+                    if (!response.ok) {
+                        this.setState({
+                            error: {
+                                title: "Error fetching notebook",
+                                err: {
+                                    message: `Status code: ${response.status}`,
+                                },
+                            },
+                        });
+                        return;
+                    }
                     try {
                         const notebook = await response.json();
                         await this.initNotebook(notebook);
                     } catch (err) {
+                        console.error(`Error parsing notebook: ${err}`);
                         console.error(err);
-                        this.setState({ error: err });
+                        this.setState({
+                            error: {
+                                title: "Error parsing notebook",
+                                err: err,
+                            },
+                        });
                     }
                 },
                 (err) => {
-                    console.error(`Error fetching notebook: ${err}`);
-                    this.setState({ error: err });
+                    // console.error(`Error fetching notebook: ${err}`);
+                    // this.setState({ error: err });
+                    this.setState({
+                        error: { title: "Error fetching notebook", err: err },
+                    });
                 }
             );
         }
@@ -60,28 +86,27 @@ class Dashboard extends React.Component {
             );
         }
 
+        if (notebook.metadata.widgets) {
+            const widgetManager = new IllusionistWidgetManager();
+
+            const widgetState =
+                notebook.metadata.widgets[WIDGET_STATE_MIMETYPE];
+            if (widgetState) {
+                await widgetManager.set_state(widgetState);
+            }
+
+            const widgetOnChangeState =
+                notebook.metadata.widgets[WIDGET_ONCHANGE_MIMETYPE];
+            if (widgetOnChangeState) {
+                await widgetManager.setOnChangeState(widgetOnChangeState);
+            }
+
+            this.setState({
+                widgetManager: widgetManager,
+            });
+        }
+
         const dashboard = notebook2dashboard(notebook);
-
-        // if (notebook.metadata.widgets) {
-        //     const widgetManager = new IllusionistWidgetManager();
-
-        //     const widgetState =
-        //         notebook.metadata.widgets[WIDGET_STATE_MIMETYPE];
-        //     if (widgetState) {
-        //         await widgetManager.set_state(widgetState);
-        //     }
-
-        //     const widgetOnChangeState =
-        //         notebook.metadata.widgets[WIDGET_ONCHANGE_MIMETYPE];
-        //     if (widgetOnChangeState) {
-        //         await widgetManager.setOnChangeState(widgetOnChangeState);
-        //     }
-
-        //     this.setState({
-        //         widgetManager: widgetManager,
-        //     });
-        // }
-
         this.setState({
             dashboard: dashboard,
             loading: false,
@@ -99,8 +124,12 @@ class Dashboard extends React.Component {
             contentEl = (
                 <div className="container-fluid d-flex flex-row loading">
                     <div className="text-center">
-                        <p className="error">Error Loading Notebook</p>
-                        <p className="error">{error.message}</p>
+                        <p className="error">{error.title}</p>
+                        <p className="error">
+                            {error.err.message
+                                ? error.err.message
+                                : "See console log for details."}
+                        </p>
                     </div>
                 </div>
             );
@@ -120,17 +149,17 @@ class Dashboard extends React.Component {
             );
         }
 
-        return <div className="jupyter-flex-page">{contentEl}</div>;
+        // return <div className="jupyter-flex-page">{contentEl}</div>;
 
-        // return (
-        //     <Provider
-        //         value={{
-        //             widgetManager: this.state.widgetManager,
-        //         }}
-        //     >
-        //         <div className="jupyter-flex-page">{contentEl}</div>
-        //     </Provider>
-        // );
+        return (
+            <DashboardProvider
+                value={{
+                    widgetManager: this.state.widgetManager,
+                }}
+            >
+                <div className="jupyter-flex-page">{contentEl}</div>
+            </DashboardProvider>
+        );
     }
 }
 
