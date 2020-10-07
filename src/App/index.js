@@ -7,6 +7,7 @@ import Dashboard from "../Dashboard";
 
 class NBViewerApp extends React.Component {
     render() {
+        // return <Dashboard />;
         return (
             <Router>
                 <Switch>

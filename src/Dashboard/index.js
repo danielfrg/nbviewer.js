@@ -1,8 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 
 import JupyterFlexDashboard from "@danielfrg/jupyter-flex";
 
+import test_nb from "./demo";
 import notebook2dashboard from "./utils";
 
 class Dashboard extends React.Component {
@@ -11,7 +12,9 @@ class Dashboard extends React.Component {
 
         this.state = {
             loading: true,
-            dashboard: null,
+            // loading: false,
+            dashboard: test_nb,
+            // dashboard: test_nb,
             widgetManager: null,
         };
     }
@@ -19,6 +22,7 @@ class Dashboard extends React.Component {
     async componentDidMount() {
         const { notebook } = this.props;
         const { url } = this.props.match.params;
+
         if (notebook) {
             try {
                 await this.initNotebook(notebook);
@@ -87,20 +91,20 @@ class Dashboard extends React.Component {
     render() {
         // TODO: We could use this url as the source code link on the dashboard
         // const { url } = this.props.match.params;
-        const { dashboard } = this.state;
+        const { loading, dashboard, error } = this.state;
 
         let contentEl;
 
-        if (this.state.error) {
+        if (error) {
             contentEl = (
                 <div className="container-fluid d-flex flex-row loading">
                     <div className="text-center">
                         <p className="error">Error Loading Notebook</p>
-                        <p className="error">{this.state.error.message}</p>
+                        <p className="error">{error.message}</p>
                     </div>
                 </div>
             );
-        } else if (this.state.loading) {
+        } else if (loading) {
             contentEl = (
                 <div className="container-fluid d-flex flex-row loading">
                     <div className="text-center">
@@ -116,16 +120,19 @@ class Dashboard extends React.Component {
             );
         }
 
-        return (
-            // <Provider
-            //     value={{
-            //         widgetManager: this.state.widgetManager,
-            //     }}
-            // >
-            <div className="jupyter-flex-page">{contentEl}</div>
-            // </Provider>
-        );
+        return <div className="jupyter-flex-page">{contentEl}</div>;
+
+        // return (
+        //     <Provider
+        //         value={{
+        //             widgetManager: this.state.widgetManager,
+        //         }}
+        //     >
+        //         <div className="jupyter-flex-page">{contentEl}</div>
+        //     </Provider>
+        // );
     }
 }
 
+// export default Dashboard;
 export default withRouter(Dashboard);

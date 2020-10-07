@@ -14,9 +14,9 @@ import {
     StreamText,
     KernelOutputError,
 } from "@nteract/outputs";
-import { Provider } from "@nteract/mathjax";
+import { Provider as MathJaxProvider } from "@nteract/mathjax";
 
-import Widget from "./Widget";
+import { Widget } from "@danielfrg/jupyter-flex";
 
 class NBCell extends React.Component {
     render() {
@@ -103,9 +103,9 @@ class NBCell extends React.Component {
         }
 
         return (
-            <Provider src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML">
+            <MathJaxProvider src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML">
                 {content}
-            </Provider>
+            </MathJaxProvider>
         );
     }
 }

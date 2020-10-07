@@ -156,7 +156,7 @@ function notebook2dashboard(notebook) {
                 current_card.body.push(cell);
             } else if (is_source) {
                 // TODO Check this actually works
-                cell.output = null;
+                cell.outputs = null;
                 current_card.body.push(cell);
             } else if (is_help) {
                 current_card.help.push(cell);

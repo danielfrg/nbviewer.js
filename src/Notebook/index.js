@@ -6,9 +6,9 @@ import IllusionistWidgetManager, {
     WIDGET_STATE_MIMETYPE,
     WIDGET_ONCHANGE_MIMETYPE,
 } from "@danielfrg/illusionist";
+import { DashboardProvider } from "@danielfrg/jupyter-flex";
 
 import NBCell from "./NBCell";
-import { Provider } from "./Context";
 
 class Notebook extends React.Component {
     constructor(props) {
@@ -144,7 +144,7 @@ class Notebook extends React.Component {
         }
 
         return (
-            <Provider
+            <DashboardProvider
                 value={{
                     widgetManager: this.state.widgetManager,
                 }}
@@ -152,8 +152,7 @@ class Notebook extends React.Component {
                 <main className="notebook container w-100 h-100 p-3 mx-auto">
                     {contentEl}
                 </main>
-                ;
-            </Provider>
+            </DashboardProvider>
         );
     }
 }
