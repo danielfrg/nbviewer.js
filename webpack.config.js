@@ -57,6 +57,10 @@ module.exports = (env, argv) => {
                             source: path.resolve(__dirname, "static"),
                             destination: path.resolve(__dirname, "dist"),
                         },
+                        {
+                            source: path.resolve(__dirname, "static", "img"),
+                            destination: path.resolve(__dirname, "dist", "img"),
+                        },
                     ],
                 },
             }),
