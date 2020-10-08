@@ -139,7 +139,7 @@ function notebook2dashboard(notebook) {
             const is_meta = cell_tags.includes("meta");
             const is_source = cell_tags.includes("source");
 
-            if (is_body || is_help || is_footer || is_meta || is_source) {
+            if (is_body || is_help || is_footer || is_source) {
                 // Check if current_* objects are created
                 // Used when the notebook starts with tagged cell
                 if (_.isEmpty(current_page)) {

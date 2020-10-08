@@ -48,7 +48,7 @@ function Examples() {
 function Image(props) {
     return (
         <Link to={props.to} className="image-card">
-            <figure className="image-card">
+            <figure>
                 <img src={props.img} alt={props.text}></img>
                 <figcaption>{props.text}</figcaption>
             </figure>
