@@ -36,8 +36,8 @@ function Examples() {
                     text="NBA Scoring"
                 />
                 <Image
-                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/ipywidgets-gallery.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/widgets/ipywidgets-gallery.png"
+                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/widgets-gallery.ipynb"
+                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/widgets/widgets-gallery.png"
                     text="Jupyter widgets"
                 />
             </div>
