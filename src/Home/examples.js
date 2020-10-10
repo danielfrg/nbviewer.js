@@ -19,10 +19,11 @@ function Examples() {
                 />
                 <Image
                     to="/nb/raw.githubusercontent.com/bokeh/bokeh-notebooks/main/tutorial/01%20-%20Basic%20Plotting.ipynb"
-                    img="/img/Bokeh.png"
+                    img="/img/bokeh.png"
                     text="Bokeh Plotting"
                 />
             </div>
+
             <h2>Jupyter-flex dashboards</h2>
             <div className="image-grid d-flex flex-wrap">
                 <Image
@@ -33,12 +34,46 @@ function Examples() {
                 <Image
                     to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/data-types.ipynb"
                     img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/demos/data-types.png"
-                    text="NBA Scoring"
+                    text="Data types"
                 />
                 <Image
                     to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/widgets-gallery.ipynb"
                     img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/widgets/widgets-gallery.png"
                     text="Jupyter widgets"
+                />
+            </div>
+
+            <h2>Illusionist</h2>
+            <div className="image-grid d-flex flex-wrap">
+                <Image
+                    to="/nb/illusionist.extrapolations.dev/examples/notebooks/multiplier.ipynb"
+                    img="/img/illusionist-multiplier.png"
+                    text="Multiplier notebook"
+                />
+                <Image
+                    to="/nb/illusionist.extrapolations.dev/examples/notebooks/widget-gallery.ipynb"
+                    img="/img/illusionist-widget-gallery.png"
+                    text="Widget gallery notebook"
+                />
+                <Image
+                    to="/nb/illusionist.extrapolations.dev/examples/notebooks/matplotlib.ipynb"
+                    img="/img/illusionist-matplotlib.png"
+                    text="Matplotlib notebook"
+                />
+                <Image
+                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/illusionist/multiplier.ipynb"
+                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/illusionist/multiplier.png"
+                    text="Multiplier dashboard"
+                />
+                <Image
+                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/illusionist/widget-gallery.ipynb"
+                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/illusionist/widget-gallery.png"
+                    text="Widget gallery notebook"
+                />
+                <Image
+                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/illusionist/matplotlib.ipynb"
+                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/illusionist/matplotlib.png"
+                    text="Matplotlib notebook"
                 />
             </div>
         </div>

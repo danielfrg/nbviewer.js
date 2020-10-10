@@ -105,7 +105,6 @@ class Dashboard extends React.Component {
             if (widgetOnChangeState) {
                 await widgetManager.setOnChangeState(widgetOnChangeState);
             }
-
             this.setState({
                 widgetManager: widgetManager,
             });
@@ -127,7 +126,7 @@ class Dashboard extends React.Component {
 
         if (error) {
             contentEl = (
-                <div className="container-fluid d-flex flex-row loading">
+                <div className="container-fluid loading-full">
                     <div className="text-center">
                         <p className="error">{error.title}</p>
                         <p className="error">
@@ -140,7 +139,7 @@ class Dashboard extends React.Component {
             );
         } else if (loading) {
             contentEl = (
-                <div className="container-fluid d-flex flex-row loading">
+                <div className="container-fluid loading-full">
                     <div className="text-center">
                         <p>... downloading and building dashboard ...</p>
                     </div>
@@ -150,19 +149,12 @@ class Dashboard extends React.Component {
             contentEl = (
                 <JupyterFlexDashboard
                     dashboard={dashboard}
+                    widgetManager={widgetManager}
                 ></JupyterFlexDashboard>
             );
         }
 
-        return (
-            <DashboardProvider
-                value={{
-                    widgetManager: widgetManager,
-                }}
-            >
-                <div className="jupyter-flex-page">{contentEl}</div>
-            </DashboardProvider>
-        );
+        return <div className="jupyter-flex-page">{contentEl}</div>;
     }
 }
 
