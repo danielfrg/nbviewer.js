@@ -219,6 +219,8 @@
     }
 
     .action-buttons {
+        display: flex;
+        flex-direction: column;
         padding: 0px 10px 0;
 
         @media (min-width: 576px) {

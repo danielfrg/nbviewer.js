@@ -145,8 +145,18 @@ class Notebook extends React.Component {
             );
         } else if (notebook) {
             contentEl = (
-                <Fragment>
-                    <div className="action-buttons float-right">
+                <div className="row flex-xl-nowrap">
+                    <Cells className="col-md-11 cells">
+                        {notebook.cells.map((cell, i) => {
+                            return (
+                                <DashboardCell
+                                    key={i}
+                                    {...cell}
+                                ></DashboardCell>
+                            );
+                        })}
+                    </Cells>
+                    <div className="action-buttons">
                         <a href="/">
                             <span className="material-icons">home</span>
                         </a>
@@ -154,6 +164,7 @@ class Notebook extends React.Component {
                             <a
                                 href={`//${url}`}
                                 title="Download Notebook"
+                                target="blank"
                                 download
                             >
                                 <span className="material-icons">
@@ -164,17 +175,7 @@ class Notebook extends React.Component {
                             ""
                         )}
                     </div>
-                    <Cells className="cells">
-                        {notebook.cells.map((cell, i) => {
-                            return (
-                                <DashboardCell
-                                    key={i}
-                                    {...cell}
-                                ></DashboardCell>
-                            );
-                        })}
-                    </Cells>
-                </Fragment>
+                </div>
             );
         }
 
