@@ -3,8 +3,6 @@ import React, { Fragment } from "react";
 import Modal from "./modal";
 import Examples from "./examples";
 import URLForm from "./urlform";
-import Notebook from "../Notebook";
-import Dashboard from "../Dashboard";
 
 class Home extends React.Component {
     constructor(props) {
@@ -25,17 +23,13 @@ class Home extends React.Component {
     };
 
     onUpload = (notebook, type) => {
-        this.setState({ notebook: notebook, type: type });
+        this.props.history.push({
+            pathname: `/${type}`,
+            state: { notebook: notebook },
+        });
     };
 
     render() {
-        if (this.state.notebook && this.state.type == "flex") {
-            return <Dashboard notebook={this.state.notebook} />;
-        }
-        if (this.state.notebook) {
-            return <Notebook notebook={this.state.notebook} />;
-        }
-
         const sourceModal = (
             <Modal title="About nbviewer.js" onCloseClick={this.toggleModal}>
                 <p>

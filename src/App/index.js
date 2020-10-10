@@ -17,8 +17,18 @@ class NBViewerApp extends React.Component {
                     ></Route>
                     <Route
                         exact
+                        path="/nb"
+                        render={(props) => <Notebook {...props} />}
+                    ></Route>
+                    <Route
+                        exact
                         path="/nb/:url+"
                         render={(props) => <Notebook {...props} />}
+                    ></Route>
+                    <Route
+                        exact
+                        path="/flex"
+                        render={(props) => <Dashboard {...props} />}
                     ></Route>
                     <Route
                         exact

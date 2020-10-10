@@ -38,8 +38,7 @@ class URLForm extends React.Component {
     };
 
     render() {
-        const { url, type, error } = this.state;
-        console.log(type);
+        const { url, error } = this.state;
 
         return (
             <div className="url-form">

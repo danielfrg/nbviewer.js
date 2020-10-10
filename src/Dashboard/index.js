@@ -15,7 +15,7 @@ class Dashboard extends React.Component {
         super(props);
 
         this.state = {
-            loading: true,
+            loading: null,
             error: null, // Should be like: { title: "", err: "" }
             dashboard: null,
             widgetManager: null,
@@ -23,8 +23,13 @@ class Dashboard extends React.Component {
     }
 
     async componentDidMount() {
-        const { notebook } = this.props;
         const { url } = this.props.match.params;
+        let { notebook } = this.props;
+
+        // Check if notebook was passed from Route
+        if (this.props.location && this.props.location.state) {
+            notebook = notebook || this.props.location.state.notebook;
+        }
 
         if (notebook) {
             try {

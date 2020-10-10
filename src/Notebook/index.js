@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { withRouter } from "react-router-dom";
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
 
 import { Cells } from "@nteract/presentational-components";
 import IllusionistWidgetManager, {
@@ -21,8 +21,13 @@ class Notebook extends React.Component {
     }
 
     async componentDidMount() {
-        const { notebook } = this.props;
         const { url } = this.props.match.params;
+        let { notebook } = this.props;
+
+        // Check if notebook was passed from Route
+        if (this.props.location && this.props.location.state) {
+            notebook = notebook || this.props.location.state.notebook;
+        }
 
         if (notebook) {
             try {
@@ -157,9 +162,9 @@ class Notebook extends React.Component {
                         })}
                     </Cells>
                     <div className="action-buttons">
-                        <a href="/">
+                        <Link to="/">
                             <span className="material-icons">home</span>
-                        </a>
+                        </Link>
                         {url ? (
                             <a
                                 href={`//${url}`}
