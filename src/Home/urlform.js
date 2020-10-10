@@ -1,48 +1,85 @@
-import React, { useState } from "react";
+import React from "react";
 
-function URLForm(props) {
-    const [error, setError] = useState("");
-    const [url, setURL] = useState("");
+import Drop from "./drop";
 
-    const handleSubmit = (event) => {
+class URLForm extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            url: "",
+            type: "nb",
+            error: "",
+        };
+    }
+
+    onUpload = (notebook) => {
+        this.props.onUpload(notebook, this.state.type);
+    };
+
+    handleSubmit = (event) => {
         event.preventDefault();
 
-        if (!url) {
+        if (!this.state.url) {
             return;
         }
 
         try {
-            const urlObj = new URL(url);
-            props.onSubmit(urlObj);
+            const urlObj = new URL(this.state.url);
+            this.props.onSubmit(urlObj, this.state.type);
         } catch (err) {
             console.error(err);
-            setError(err.message);
+            this.setError(err.message);
         }
     };
 
-    return (
-        <div className="url-form">
-            <form onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <input
-                        type="text"
-                        id="main-input"
-                        className="form-control"
-                        name="url"
-                        placeholder="URL"
-                        value={url}
-                        onChange={(event) => setURL(event.target.value)}
-                    ></input>
-                    <div className="input-group-append">
-                        <button type="submit" className="btn btn-outline">
-                            Go
-                        </button>
+    setError = (error) => {
+        this.setState({ error: error });
+    };
+
+    render() {
+        const { url, type, error } = this.state;
+        console.log(type);
+
+        return (
+            <div className="url-form">
+                <form onSubmit={this.handleSubmit}>
+                    <div className="input-group">
+                        <div className="input-group-prepend">
+                            <select
+                                className="custom-select"
+                                defaultValue="notebook"
+                                onBlur={(event) =>
+                                    this.setState({ type: event.target.value })
+                                }
+                            >
+                                <option value="nb">Notebook</option>
+                                <option value="flex">Flex Dashboard</option>
+                            </select>
+                        </div>
+                        <input
+                            type="text"
+                            id="main-input"
+                            className="form-control"
+                            name="url"
+                            placeholder="URL"
+                            value={url}
+                            onChange={(event) =>
+                                this.setState({ url: event.target.value })
+                            }
+                        ></input>
+                        <div className="input-group-append">
+                            <button type="submit" className="btn btn-outline">
+                                Go
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
-            <div className="error">{error}</div>
-        </div>
-    );
+                </form>
+                <Drop onDrop={this.onUpload} onError={this.setError} />
+                <div className="error">{error}</div>
+            </div>
+        );
+    }
 }
 
 export default URLForm;

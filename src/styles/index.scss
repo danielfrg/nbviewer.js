@@ -51,13 +51,13 @@
         padding: 30px;
         border-width: 2px;
         border-radius: 2px;
-        border-color: #eeeeee;
+        border-color: #b3b3b3;
         border-style: dashed;
-        background-color: #fafafa;
-        color: #bdbdbd;
+        background-color: #f3f3f3;
+        color: #777777;
         outline: none;
         transition: border 0.24s ease-in-out;
-        margin-bottom: 3em;
+        // margin-bottom: 3em;
 
         p {
             margin: 0;
@@ -66,6 +66,10 @@
 
     .url-form {
         margin-top: 20px;
+
+        select {
+            border-radius: 0;
+        }
 
         .btn-outline {
             color: #333;

@@ -1,33 +1,37 @@
 import React, { Fragment } from "react";
 
-import Drop from "./drop";
-import Examples from "./examples";
 import Modal from "./modal";
+import Examples from "./examples";
 import URLForm from "./urlform";
 import Notebook from "../Notebook";
+import Dashboard from "../Dashboard";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            notebook: null,
             showModal: false,
+            notebook: null,
+            type: null,
         };
     }
 
-    onDrop = (notebook) => {
-        this.setState({ notebook: notebook });
-    };
-
-    onSubmit = (url) => {
-        let target = url.href.substring(url.protocol.length + 2);
-        this.props.history.push(`/nb/${target}`);
-    };
-
     toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
+    onSubmit = (url, type) => {
+        let target = url.href.substring(url.protocol.length + 2);
+        this.props.history.push(`/${type}/${target}`);
+    };
+
+    onUpload = (notebook, type) => {
+        this.setState({ notebook: notebook, type: type });
+    };
+
     render() {
+        if (this.state.notebook && this.state.type == "flex") {
+            return <Dashboard notebook={this.state.notebook} />;
+        }
         if (this.state.notebook) {
             return <Notebook notebook={this.state.notebook} />;
         }
@@ -77,8 +81,10 @@ class Home extends React.Component {
                                 Upload a file or paste an URL to render it:
                             </p>
 
-                            <URLForm onSubmit={this.onSubmit} />
-                            <Drop onDrop={this.onDrop} />
+                            <URLForm
+                                onSubmit={this.onSubmit}
+                                onUpload={this.onUpload}
+                            />
                             <Examples />
                         </main>
                         <footer className="mt-auto text-center">

@@ -1,25 +1,23 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 function Drop(props) {
-    const [error, setError] = useState("");
-
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file) => {
             const reader = new FileReader();
 
             reader.onabort = () => {
-                setError("File reading aborted.");
+                props.onError("File reading aborted.");
             };
             reader.onerror = () => {
-                setError("File reading failed.");
+                props.onError("File reading failed.");
             };
             reader.onload = () => {
                 try {
                     const notebook = JSON.parse(reader.result);
                     props.onDrop(notebook);
                 } catch (err) {
-                    setError(err.message);
+                    props.onError(err.message);
                 }
             };
 
@@ -30,7 +28,7 @@ function Drop(props) {
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     return (
-        <section>
+        <section className="drop">
             <div {...getRootProps({ className: "dropzone" })}>
                 <input {...getInputProps()} />
                 <p>
@@ -38,7 +36,6 @@ function Drop(props) {
                     click to select a file
                 </p>
             </div>
-            <div className="error">{error}</div>
         </section>
     );
 }
