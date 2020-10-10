@@ -3,7 +3,7 @@ name: deploy
 on:
   push:
     branches: [master]
-  pull_request:
+  pull_request_target:
 
 jobs:
   deploy:
@@ -27,7 +27,7 @@ jobs:
 
       - name: Push website (branch)
         uses: jsmrcaga/action-netlify-deploy@master
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request_target'
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
