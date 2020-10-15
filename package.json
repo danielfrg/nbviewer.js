@@ -32,6 +32,8 @@
         "test:watch": "jest --watch"
     },
     "dependencies": {
+        "@danielfrg/illusionist": "^0.3.0-beta.2",
+        "@danielfrg/jupyter-flex": "^0.7.0-beta.5",
         "@nteract/mathjax": "4.0.9",
         "@nteract/outputs": "3.0.9",
         "@nteract/presentational-components": "3.3.14",
@@ -47,8 +49,6 @@
         "@babel/plugin-proposal-class-properties": "^7.4.0",
         "@babel/preset-env": "^7.10.2",
         "@babel/preset-react": "^7.0.0",
-        "@danielfrg/illusionist": "^0.3.0-beta.2",
-        "@danielfrg/jupyter-flex": "^0.7.0-beta.2",
         "@types/react": "^16.9.35",
         "@types/react-dom": "^16.9.8",
         "babel-eslint": "^10.1.0",

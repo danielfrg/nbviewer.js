@@ -66,7 +66,7 @@ class Home extends React.Component {
 
         return (
             <Fragment>
-                <div className="home">
+                <div className="home-page">
                     <div className="content container d-flex w-100 h-100 p-3 mx-auto flex-column">
                         <main>
                             <h1 className="text-center">nbviewer.js</h1>

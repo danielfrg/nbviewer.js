@@ -6,7 +6,6 @@ import IllusionistWidgetManager, {
     WIDGET_ONCHANGE_MIMETYPE,
 } from "@danielfrg/illusionist";
 import JupyterFlexDashboard from "@danielfrg/jupyter-flex";
-import { DashboardProvider } from "@danielfrg/jupyter-flex";
 
 import notebook2dashboard from "./convert";
 
@@ -65,7 +64,7 @@ class Dashboard extends React.Component {
 
                     try {
                         const notebook = await response.json();
-                        await this.initNotebook(notebook);
+                        await this.initNotebook(notebook, url);
                     } catch (err) {
                         console.error(`Error parsing notebook: ${err}`);
                         console.error(err);
@@ -88,7 +87,7 @@ class Dashboard extends React.Component {
         }
     }
 
-    async initNotebook(notebook) {
+    async initNotebook(notebook, url) {
         const { nbformat } = notebook;
         if (nbformat != 4) {
             throw new Error(
@@ -116,6 +115,15 @@ class Dashboard extends React.Component {
         }
 
         const dashboard = notebook2dashboard(notebook);
+
+        if (!dashboard.props.title) {
+            var filename = url.substring(url.lastIndexOf("/") + 1);
+            dashboard.props.title = filename;
+        }
+        if (!dashboard.props.home) {
+            dashboard.props.home = "/";
+        }
+
         this.setState({
             dashboard: dashboard,
             loading: false,
