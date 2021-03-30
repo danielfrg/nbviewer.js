@@ -25,11 +25,11 @@ jobs:
 
       - name: Install JS deps
         run: |
-          make npm-install
+          npm install
 
       - name: Build website
         run: |
-          make npm-build
+          npm run build
 
       - name: Push docs (master)
         uses: jsmrcaga/action-netlify-deploy@master
