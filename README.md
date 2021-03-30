@@ -7,4 +7,4 @@ Client-only Javascript Jupyter Notebook viewer.
 
 [Online App](https://nbviewer.danielfrg.com)
 
-[![nbviewer.js](https://raw.githubusercontent.com/danielfrg/nbviewer.js/master/nbviewer-js.png)](https://word2vec.danielfrg.com)
+[![nbviewer.js](https://raw.githubusercontent.com/danielfrg/nbviewer.js/master/nbviewer-js.png)](https://nbviewer.danielfrg.com)
