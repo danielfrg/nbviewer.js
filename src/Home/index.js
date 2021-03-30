@@ -43,12 +43,10 @@ class Home extends React.Component {
                 </p>
                 <p>
                     Additionally it supports{" "}
-                    <a href="https://illusionist.extrapolations.dev/">
-                        illusionist
-                    </a>
+                    <a href="https://illusionist.danielfrg.com/">illusionist</a>
                     , this allows you to deploy client-only Notebooks with
                     widgets, and{" "}
-                    <a href="https://jupyter-flex.extrapolations.dev/">
+                    <a href="https://jupyter-flex.danielfrg.com/">
                         jupyter-flex
                     </a>{" "}
                     dashboards.

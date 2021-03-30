@@ -24,55 +24,61 @@ function Examples() {
                 />
             </div>
 
-            <h2>Jupyter-flex dashboards</h2>
+            <h2>
+                <a href="https://jupyter-flex.danielfrg.com">
+                    Jupyter-flex dashboards
+                </a>
+            </h2>
             <div className="image-grid d-flex flex-wrap">
                 <Image
-                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/altair.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/plots/altair.png"
+                    to="/flex/jupyter-flex.danielfrg.com/examples/notebooks/altair.ipynb"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/plots/altair.png"
                     text="Altair plots"
                 />
                 <Image
-                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/data-types.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/demos/data-types.png"
+                    to="/flex/jupyter-flex.danielfrg.com/examples/notebooks/data-types.ipynb"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/demos/data-types.png"
                     text="Data types"
                 />
                 <Image
-                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/widgets-gallery.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/widgets/widgets-gallery.png"
+                    to="/flex/jupyter-flex.danielfrg.com/examples/notebooks/widgets-gallery.ipynb"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/widgets/widgets-gallery.png"
                     text="Jupyter widgets"
                 />
             </div>
 
-            <h2>Illusionist</h2>
+            <h2>
+                <a href="https://illusionist.danielfrg.com">Illusionist</a>
+            </h2>
             <div className="image-grid d-flex flex-wrap">
                 <Image
-                    to="/nb/illusionist.extrapolations.dev/examples/notebooks/multiplier.ipynb"
+                    to="/nb/illusionist.danielfrg.com/examples/notebooks/multiplier.ipynb"
                     img="/img/illusionist-multiplier.png"
                     text="Multiplier notebook"
                 />
                 <Image
-                    to="/nb/illusionist.extrapolations.dev/examples/notebooks/widget-gallery.ipynb"
+                    to="/nb/illusionist.danielfrg.com/examples/notebooks/widget-gallery.ipynb"
                     img="/img/illusionist-widget-gallery.png"
                     text="Widget gallery notebook"
                 />
                 <Image
-                    to="/nb/illusionist.extrapolations.dev/examples/notebooks/matplotlib.ipynb"
+                    to="/nb/illusionist.danielfrg.com/examples/notebooks/matplotlib.ipynb"
                     img="/img/illusionist-matplotlib.png"
                     text="Matplotlib notebook"
                 />
                 <Image
-                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/illusionist/multiplier.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/illusionist/multiplier.png"
+                    to="/flex/jupyter-flex.danielfrg.com/examples/notebooks/illusionist/multiplier.ipynb"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/illusionist/multiplier.png"
                     text="Multiplier dashboard"
                 />
                 <Image
-                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/illusionist/widget-gallery.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/illusionist/widget-gallery.png"
+                    to="/flex/jupyter-flex.danielfrg.com/examples/notebooks/illusionist/widget-gallery.ipynb"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/illusionist/widget-gallery.png"
                     text="Widget gallery notebook"
                 />
                 <Image
-                    to="/flex/jupyter-flex.extrapolations.dev/examples/notebooks/illusionist/matplotlib.ipynb"
-                    img="https://jupyter-flex.extrapolations.dev/assets/img/screenshots/illusionist/matplotlib.png"
+                    to="/flex/jupyter-flex.danielfrg.com/examples/notebooks/illusionist/matplotlib.ipynb"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/illusionist/matplotlib.png"
                     text="Matplotlib notebook"
                 />
             </div>
