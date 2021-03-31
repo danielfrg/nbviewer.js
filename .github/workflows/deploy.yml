@@ -23,13 +23,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install JS deps
+      - name: Install JS dependencies
         run: |
-          npm install
+          make npm-install
 
       - name: Build website
         run: |
-          npm run build
+          make npm-build
 
       - name: Push docs (master)
         uses: jsmrcaga/action-netlify-deploy@master
