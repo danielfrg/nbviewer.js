@@ -5,8 +5,6 @@ SHELL := bash
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
-PWD := $(shell pwd)
-
 
 first: help
 
@@ -14,13 +12,13 @@ first: help
 # ------------------------------------------------------------------------------
 # Build
 
+build:  ## Build app
+	npm run build
+
+
 npm-i: npm-install
 npm-install:  ## npm install
 	npm install
-
-
-npm-build:  ## npm build
-	npm run build
 
 
 # ------------------------------------------------------------------------------

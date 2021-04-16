@@ -29,7 +29,7 @@ jobs:
 
       - name: Build website
         run: |
-          make npm-build
+          make build
 
       - name: Push docs (master)
         uses: jsmrcaga/action-netlify-deploy@master
