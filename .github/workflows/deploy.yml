@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -33,7 +33,7 @@ jobs:
 
       - name: Push docs (master)
         uses: jsmrcaga/action-netlify-deploy@master
-        if: (github.event_name == 'push') && endsWith(github.ref, '/master')
+        if: (github.event_name == 'push') && endsWith(github.ref, '/main')
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
