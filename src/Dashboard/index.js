@@ -1,11 +1,51 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import dynamic from "next/dynamic";
+import { withRouter } from "next/router";
 
-import IllusionistWidgetManager, {
-    WIDGET_STATE_MIMETYPE,
-    WIDGET_ONCHANGE_MIMETYPE,
-} from "@danielfrg/illusionist";
-import JupyterFlexDashboard from "@danielfrg/jupyter-flex";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+// import IllusionistWidgetManager, {
+//     WIDGET_STATE_MIMETYPE,
+//     WIDGET_ONCHANGE_MIMETYPE,
+// } from "@danielfrg/illusionist";
+const IllusionistWidgetManager = dynamic(
+    () =>
+        import("@danielfrg/illusionist").then(
+            (mod) => mod.IllusionistWidgetManager
+        ),
+    {
+        ssr: false,
+    }
+);
+const WIDGET_STATE_MIMETYPE = dynamic(
+    () =>
+        import("@danielfrg/illusionist").then(
+            (mod) => mod.WIDGET_STATE_MIMETYPE
+        ),
+    {
+        ssr: false,
+    }
+);
+const WIDGET_ONCHANGE_MIMETYPE = dynamic(
+    () =>
+        import("@danielfrg/illusionist").then(
+            (mod) => mod.WIDGET_ONCHANGE_MIMETYPE
+        ),
+    {
+        ssr: false,
+    }
+);
+
+// import JupyterFlexDashboard from "@danielfrg/jupyter-flex";
+const JupyterFlexDashboard = dynamic(
+    () =>
+        import("@danielfrg/jupyter-flex").then(
+            (mod) => mod.JupyterFlexDashboard
+        ),
+    {
+        ssr: false,
+    }
+);
 
 import notebook2dashboard from "./convert";
 
@@ -14,6 +54,7 @@ class Dashboard extends React.Component {
         super(props);
 
         this.state = {
+            url: "",
             loading: null,
             error: null, // Should be like: { title: "", err: "" }
             dashboard: null,
@@ -22,15 +63,19 @@ class Dashboard extends React.Component {
     }
 
     async componentDidMount() {
-        const { url } = this.props.match.params;
-        let { notebook } = this.props;
+        const { router, notebook } = this.props;
+        console.log("Router:");
+        console.log(router);
+        const path = router.asPath; // : "/song#asadfasdf"
+        const paths = path.split("#");
 
-        // Check if notebook was passed from Route
-        if (this.props.location && this.props.location.state) {
-            notebook = notebook || this.props.location.state.notebook;
-        }
+        const url = paths.length < 1 ? undefined : paths[1];
+        this.setState({ url: url });
+        console.log("Dashboard URL:");
+        console.log(url);
 
         if (notebook) {
+            // Notebook passed as props
             try {
                 await this.initNotebook(notebook);
             } catch (err) {
@@ -126,36 +171,31 @@ class Dashboard extends React.Component {
 
         this.setState({
             dashboard: dashboard,
-            loading: false,
+            // loading: false,
         });
     }
 
     render() {
-        // TODO: We could use this url as the source code link on the dashboard
-        // const { url } = this.props.match.params;
-        const { loading, dashboard, error, widgetManager } = this.state;
+        const { url, loading, dashboard, error, widgetManager } = this.state;
 
         let contentEl;
 
         if (error) {
             contentEl = (
-                <div className="container-fluid loading-full">
-                    <div className="text-center">
-                        <p className="error">{error.title}</p>
-                        <p className="error">
-                            {error.err && error.err.message
-                                ? error.err.message
-                                : "See console log for details."}
-                        </p>
-                    </div>
+                <div className="center">
+                    <p className="error">{error.title}</p>
+                    <p className="error">
+                        {error.err && error.err.message
+                            ? error.err.message
+                            : "See console log for details."}
+                    </p>
                 </div>
             );
         } else if (loading) {
             contentEl = (
-                <div className="container-fluid loading-full">
-                    <div className="text-center">
-                        <p>... downloading and building dashboard ...</p>
-                    </div>
+                <div className="center">
+                    <CircularProgress color="primary" />
+                    <p>Downloading notebook</p>
                 </div>
             );
         } else if (dashboard) {

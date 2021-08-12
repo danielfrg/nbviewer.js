@@ -9,16 +9,34 @@ MAKEFLAGS += --no-builtin-rules
 first: help
 
 
+build: npm-build
+
 # ------------------------------------------------------------------------------
 # Build
 
-build:  ## Build app
+
+npm-build:  ## Build website
 	npm run build
+	npm run export
 
 
 npm-i: npm-install
-npm-install:  ## npm install
+npm-install:  ## Install JS dependencies
 	npm install
+
+
+npm-dev:  ## Run dev server
+	npm run dev
+
+
+cleanjs:  ## Clean JS files
+	rm -rf out
+	rm -rf .next
+
+
+cleanalljs: cleanjs  ## Clean JS files
+	rm -rf node_modules
+	rm -rf package-lock.json
 
 
 # ------------------------------------------------------------------------------
