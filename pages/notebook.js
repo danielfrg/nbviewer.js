@@ -21,7 +21,7 @@ class NotebookPage extends React.Component {
         const { router } = this.props;
         console.log("Router:");
         console.log(router);
-        const path = router.asPath; // : "/song#asadfasdf"
+        const path = router.asPath; // : "/notebook#asadfasdf"
         const paths = path.split("#");
 
         const url = paths.length < 1 ? undefined : paths[1];

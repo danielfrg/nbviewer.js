@@ -21,7 +21,7 @@ class FlexPage extends React.Component {
         const { router } = this.props;
         console.log("Router:");
         console.log(router);
-        const path = router.asPath; // : "/song#asadfasdf"
+        const path = router.asPath; // : "/flex#asadfasdf"
         const paths = path.split("#");
 
         const url = paths.length < 1 ? undefined : paths[1];
@@ -51,7 +51,9 @@ class FlexPage extends React.Component {
 
                     try {
                         const notebook = await response.json();
-                        await this.initNotebook(notebook);
+                        console.log("Downloaded notebook:");
+                        console.log(notebook);
+                        this.setState({ loading: false, notebook: notebook });
                     } catch (err) {
                         console.error(`Error parsing notebook: ${err}`);
                         console.error(err);
@@ -72,40 +74,6 @@ class FlexPage extends React.Component {
                 }
             );
         }
-    }
-
-    async initNotebook(notebook) {
-        const { nbformat } = notebook;
-        if (nbformat != 4) {
-            throw new Error(
-                "Only Notebooks in format version 4 are supported."
-            );
-        }
-
-        if (notebook.metadata.widgets) {
-            const widgetManager = new IllusionistWidgetManager();
-
-            const widgetState =
-                notebook.metadata.widgets[WIDGET_STATE_MIMETYPE];
-            if (widgetState) {
-                await widgetManager.set_state(widgetState);
-            }
-
-            const widgetOnChangeState =
-                notebook.metadata.widgets[WIDGET_ONCHANGE_MIMETYPE];
-            if (widgetOnChangeState) {
-                await widgetManager.setOnChangeState(widgetOnChangeState);
-            }
-
-            this.setState({
-                widgetManager: widgetManager,
-            });
-        }
-
-        this.setState({
-            notebook: notebook,
-            loading: false,
-        });
     }
 
     render() {
