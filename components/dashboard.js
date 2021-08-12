@@ -32,11 +32,11 @@ class Dashboard extends React.Component {
             );
         }
 
-        if (notebook.metadata.widgets) {
-            import("@danielfrg/illusionist").then(async (mod) => {
-                const IllusionistWidgetManager = mod.default;
-                const widgetManager = new IllusionistWidgetManager();
+        import("@danielfrg/illusionist").then(async (mod) => {
+            const IllusionistWidgetManager = mod.default;
+            const widgetManager = new IllusionistWidgetManager();
 
+            if (notebook.metadata.widgets) {
                 const widgetState =
                     notebook.metadata.widgets[mod.WIDGET_STATE_MIMETYPE];
                 if (widgetState) {
@@ -48,18 +48,13 @@ class Dashboard extends React.Component {
                 if (widgetOnChangeState) {
                     await widgetManager.setOnChangeState(widgetOnChangeState);
                 }
+            }
 
-                this.setState({
-                    loading: false,
-                    widgetManager: widgetManager,
-                });
-            });
-        } else {
             this.setState({
                 loading: false,
-                widgetManager: null,
+                widgetManager: widgetManager,
             });
-        }
+        });
     }
 
     render() {
@@ -81,7 +76,7 @@ class Dashboard extends React.Component {
             );
         }
 
-        if (loading) {
+        if (loading && !widgetManager) {
             return (
                 <div className="notebook">
                     <div className="center">
