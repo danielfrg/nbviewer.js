@@ -13,7 +13,7 @@ class FlexPage extends React.Component {
             url: "",
             error: null, // Should be like: { title: "", err: "" }
             notebook: null,
-            loading: false,
+            loading: true,
         };
     }
 
@@ -21,11 +21,11 @@ class FlexPage extends React.Component {
         const { router } = this.props;
         console.log("Router:");
         console.log(router);
-        const path = router.asPath; // : "/flex#asadfasdf"
+
+        const path = router.asPath; // : "/flex#github.com/path/path"
         const paths = path.split("#");
 
         const url = paths.length < 1 ? undefined : paths[1];
-        this.setState({ url: url });
         console.log("Notebook URL:");
         console.log(url);
 
@@ -67,17 +67,18 @@ class FlexPage extends React.Component {
                 },
                 (err) => {
                     console.error(`Error fetching notebook: ${err}`);
-                    this.setState({ error: err });
                     this.setState({
                         error: { title: "Error fetching notebook", err: err },
                     });
                 }
             );
+        } else {
+            this.setState({ loading: true });
         }
     }
 
     render() {
-        const { url, error, loading, notebook } = this.state;
+        const { error, loading, notebook } = this.state;
 
         if (error) {
             return (
@@ -105,7 +106,7 @@ class FlexPage extends React.Component {
             );
         }
 
-        return <Dashboard url={url} notebook={notebook}></Dashboard>;
+        return <Dashboard notebook={notebook} />;
     }
 }
 

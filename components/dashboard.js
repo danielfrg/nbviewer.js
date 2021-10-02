@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { url, notebook } = this.props;
+        const { notebook } = this.props;
         const { error, loading, widgetManager } = this.state;
 
         if (error) {
