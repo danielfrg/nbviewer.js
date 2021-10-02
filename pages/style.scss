@@ -1,5 +1,4 @@
-// @import "@danielfrg/jupyter-flex/src/styles/index.scss";
-@import "~@danielfrg/jupyter-flex/lib/styles/jupyter-flex.css";
+@import "~@danielfrg/jupyter-flex/lib/styles.css";
 
 body {
     width: 100%;
@@ -221,6 +220,14 @@ body {
             &:hover {
                 color: #636d72;
             }
+        }
+    }
+
+    .code-cell {
+        margin: 5px 0 !important;
+
+        .prompt {
+            padding: 9px 15px;
         }
     }
 }

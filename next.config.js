@@ -1,7 +1,3 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-    enabled: process.env.ANALYZE === "true",
-});
-
 const config = {
     eslint: {
         // Warning: Dangerously allow production builds to successfully complete even if
@@ -14,8 +10,8 @@ const withTM = require("next-transpile-modules")([
     "@jupyter-widgets/base",
     "@jupyter-widgets/controls",
     "@jupyter-widgets/html-manager",
-    "@danielfrg/illusionist",
-    "@danielfrg/jupyter-flex",
+    // "@danielfrg/illusionist",
+    // "@danielfrg/jupyter-flex",
 ]);
 
 module.exports = withTM({
@@ -34,5 +30,3 @@ module.exports = withTM({
         return config;
     },
 });
-
-// module.exports =

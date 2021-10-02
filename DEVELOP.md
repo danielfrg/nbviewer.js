@@ -1,8 +1,6 @@
 # Development
 
-## JavaScript App
-
-```
+```shell
 npm i
 npm run dev
 ```

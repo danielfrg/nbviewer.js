@@ -19,7 +19,7 @@ function Image(props) {
 export default function Examples() {
     return (
         <div className="samples">
-            <h2>Sample Notebooks</h2>
+            <h2>Example notebooks</h2>
             <Grid container direction="row">
                 <Grid
                     item
@@ -49,7 +49,7 @@ export default function Examples() {
 
             <h2>
                 <a href="https://jupyter-flex.danielfrg.com">
-                    Sample jupyter-flex dashboards
+                    Example jupyter-flex dashboards
                 </a>
             </h2>
             <Grid container direction="row">
@@ -58,7 +58,7 @@ export default function Examples() {
                     xs={4}
                     component={Image}
                     href="/flex#jupyter-flex.danielfrg.com/examples/notebooks/altair.ipynb"
-                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/plots/altair.png"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/jupyter_flex.tests.test_examples/plots_altair-reference.png"
                     text="Altair plots"
                 />
                 <Grid
@@ -66,7 +66,7 @@ export default function Examples() {
                     xs={4}
                     component={Image}
                     href="/flex#jupyter-flex.danielfrg.com/examples/notebooks/data-types.ipynb"
-                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/demos/data-types.png"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/jupyter_flex.tests.test_examples/apps_data-types-reference.png"
                     text="Data types"
                 />
                 <Grid
@@ -74,13 +74,15 @@ export default function Examples() {
                     xs={4}
                     component={Image}
                     href="/flex#jupyter-flex.danielfrg.com/examples/notebooks/widgets-gallery.ipynb"
-                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/widgets/widgets-gallery.png"
+                    img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/jupyter_flex.tests.test_examples/widgets_widgets-gallery-reference.png"
                     text="Jupyter widgets"
                 />
             </Grid>
 
             <h2>
-                <a href="https://illusionist.danielfrg.com">Illusionist</a>
+                <a href="https://illusionist.danielfrg.com">
+                    Example illusionist
+                </a>
             </h2>
             <Grid container direction="row">
                 <Grid
@@ -107,7 +109,7 @@ export default function Examples() {
                     img="/img/illusionist-matplotlib.png"
                     text="Matplotlib notebook"
                 />
-                <Grid
+                {/* <Grid
                     item
                     xs={4}
                     component={Image}
@@ -130,7 +132,7 @@ export default function Examples() {
                     href="/flex#jupyter-flex.danielfrg.com/examples/notebooks/illusionist/matplotlib.ipynb"
                     img="https://jupyter-flex.danielfrg.com/assets/img/screenshots/illusionist/matplotlib.png"
                     text="Matplotlib notebook"
-                />
+                /> */}
             </Grid>
         </div>
     );

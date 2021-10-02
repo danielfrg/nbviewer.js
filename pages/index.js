@@ -7,7 +7,6 @@ import URLForm from "../components/urlform";
 import Samples from "../components/samples";
 import Notebook from "../components/notebook";
 import Dashboard from "../components/dashboard";
-// import Dashboard from "./flex";
 
 export default function Index(props) {
     const router = useRouter();
